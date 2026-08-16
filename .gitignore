@@ -1,0 +1,19 @@
+# Backend
+backend/node_modules/
+backend/uploads/
+backend/.env
+
+# Frontend build
+frontend/build/
+frontend/.dart_tool/
+
+# APK files
+*.apk
+*.aab
+
+# Zip/backups
+*.zip
+
+# OS
+.DS_Store
+Thumbs.db
