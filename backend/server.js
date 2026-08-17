@@ -38,6 +38,9 @@ app.use((req, res, next) => {
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
   crossOriginEmbedderPolicy: false,
+  crossOriginOpenerPolicy: false,
+  contentSecurityPolicy: false,
+  referrerPolicy: false,
 }));
 app.use(cors({
   origin: '*',
