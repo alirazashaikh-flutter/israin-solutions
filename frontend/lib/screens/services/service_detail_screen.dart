@@ -418,7 +418,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
               Navigator.pushNamed(
                 context,
                 '/inquiry-form',
-                arguments: {'serviceId': service.id, 'serviceType': service.category},
+                arguments: {'serviceId': service.id, 'serviceType': service.category, 'serviceName': service.name},
               );
             },
             style: ElevatedButton.styleFrom(

@@ -157,4 +157,27 @@ class AuthProvider extends ChangeNotifier {
     _pending2faEmail = null;
     notifyListeners();
   }
+
+  Future<bool> updateProfile({String? name, String? phone}) async {
+    try {
+      final result = await ApiService.put('/auth/profile', {
+        if (name != null) 'name': name,
+        if (phone != null) 'phone': phone,
+      });
+      _user = User(
+        id: result['_id'] ?? _user!.id,
+        name: result['name'] ?? _user!.name,
+        email: result['email'] ?? _user!.email,
+        phone: result['phone'] ?? _user!.phone,
+        role: result['role'] ?? _user!.role,
+        twoFactorEnabled: result['twoFactorEnabled'] ?? _user!.twoFactorEnabled,
+        createdAt: _user!.createdAt,
+      );
+      await ApiService.saveUser(_user!.toJson());
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

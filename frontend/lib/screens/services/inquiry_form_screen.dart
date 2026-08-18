@@ -41,6 +41,9 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
         if (args['serviceId'] != null) {
           setState(() => _serviceId = args['serviceId']);
         }
+        if (args['serviceName'] != null) {
+          _messageController.text = 'I am interested in ${args['serviceName']}. ';
+        }
       }
     });
   }

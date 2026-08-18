@@ -492,15 +492,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 decoration: BoxDecoration(gradient: AppColors.primaryGradient, borderRadius: BorderRadius.circular(14)),
                 child: ElevatedButton(
                   onPressed: () async {
-                    Navigator.pop(ctx);
                     try {
-                      await ApiService.put('/auth/profile', {
-                        'name': nameController.text.trim(),
-                        'phone': phoneController.text.trim(),
-                      });
+                      final success = await context.read<AuthProvider>().updateProfile(
+                        name: nameController.text.trim(),
+                        phone: phoneController.text.trim(),
+                      );
                       if (context.mounted) {
+                        Navigator.pop(ctx);
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Profile updated'), backgroundColor: AppColors.success),
+                          SnackBar(
+                            content: Text(success ? 'Profile updated' : 'Failed to update'),
+                            backgroundColor: success ? AppColors.success : AppColors.error,
+                          ),
                         );
                       }
                     } catch (e) {
