@@ -15,6 +15,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<_OnboardingPage> _pages = [
     _OnboardingPage(
+      title: 'Best on\nMobile Data',
+      description:
+          'For the best experience, use mobile data instead of WiFi. Some WiFi networks may block app connections.',
+      icon: Icons.signal_cellular_alt,
+    ),
+    _OnboardingPage(
       title: 'Transforming\nBusiness with\nAgentic AI',
       description:
           'Empower your organization with autonomous agents that streamline operations, enhance decision-making, and unlock hyper-efficiency.',
@@ -93,10 +99,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                             child: Icon(
                               _currentPage == 0
-                                  ? Icons.psychology
+                                  ? Icons.signal_cellular_alt
                                   : _currentPage == 1
-                                      ? Icons.speed
-                                      : Icons.handshake,
+                                      ? Icons.psychology
+                                      : _currentPage == 2
+                                          ? Icons.speed
+                                          : Icons.handshake,
                               size: 60,
                               color: AppColors.primaryContainer,
                             ),
@@ -219,6 +227,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 class _OnboardingPage {
   final String title;
   final String description;
+  final IconData? icon;
 
-  _OnboardingPage({required this.title, required this.description});
+  _OnboardingPage({required this.title, required this.description, this.icon});
 }
