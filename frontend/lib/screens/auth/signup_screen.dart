@@ -314,61 +314,6 @@ class _SignupScreenState extends State<SignupScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Divider(color: Colors.white.withValues(alpha: 0.15)),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
-                              child: Text(
-                                'OR CONTINUE WITH',
-                                style: GoogleFonts.inter(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white.withValues(alpha: 0.4),
-                                  letterSpacing: 0.05,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Divider(color: Colors.white.withValues(alpha: 0.15)),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: OutlinedButton.icon(
-                                onPressed: () { ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Coming soon!'), backgroundColor: AppColors.primary)); },
-                                icon: const Icon(Icons.g_mobiledata, size: 20),
-                                label: Text('Google', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w500)),
-                                style: OutlinedButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  side: BorderSide(color: Colors.white.withValues(alpha: 0.15)),
-                                  padding: const EdgeInsets.symmetric(vertical: 14),
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: OutlinedButton.icon(
-                                onPressed: () { ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Coming soon!'), backgroundColor: AppColors.primary)); },
-                                icon: const Icon(Icons.qr_code_2, size: 20),
-                                label: Text('SSO', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w500)),
-                                style: OutlinedButton.styleFrom(
-                                  foregroundColor: Colors.white,
-                                  side: BorderSide(color: Colors.white.withValues(alpha: 0.15)),
-                                  padding: const EdgeInsets.symmetric(vertical: 14),
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),

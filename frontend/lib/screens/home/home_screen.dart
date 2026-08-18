@@ -118,28 +118,29 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              gradient: AppColors.primaryGradient,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.3),
-                  blurRadius: 16,
-                  offset: const Offset(0, 6),
-                ),
-              ],
+          if (!context.read<AuthProvider>().isAdmin)
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                gradient: AppColors.primaryGradient,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primary.withValues(alpha: 0.3),
+                    blurRadius: 16,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
+              ),
+              child: FloatingActionButton(
+                onPressed: () => Navigator.pushNamed(context, '/chat-ai'),
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                heroTag: 'chat',
+                child: const Icon(Icons.chat_bubble_outline, color: Colors.white),
+              ),
             ),
-            child: FloatingActionButton(
-              onPressed: () => Navigator.pushNamed(context, '/chat-ai'),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              heroTag: 'chat',
-              child: const Icon(Icons.chat_bubble_outline, color: Colors.white),
-            ),
-          ),
         ],
       ),
     );
@@ -787,9 +788,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildBottomNav(BuildContext context, int currentIndex) {
     final isAdmin = context.read<AuthProvider>().isAdmin;
     final items = [
-      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': LanguageService.t('nav_home'), 'route': '/home'},
+      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': LanguageService.t('nav_home'), 'route': isAdmin ? '/admin' : '/home'},
       {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': 'Shop', 'route': '/shop'},
-      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': LanguageService.t('nav_inquiries'), 'route': isAdmin ? '/admin' : '/my-inquiries'},
+      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': LanguageService.t('nav_inquiries'), 'route': isAdmin ? '/admin-inquiries' : '/my-inquiries'},
       {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': LanguageService.t('nav_profile'), 'route': '/profile'},
     ];
 

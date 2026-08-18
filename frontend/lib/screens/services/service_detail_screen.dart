@@ -450,9 +450,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
   Widget _buildBottomNav(BuildContext context, int currentIndex) {
     final isAdmin = context.read<AuthProvider>().isAdmin;
     final items = [
-      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': LanguageService.t('nav_home'), 'route': '/home'},
+      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': LanguageService.t('nav_home'), 'route': isAdmin ? '/admin' : '/home'},
       {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': 'Shop', 'route': '/shop'},
-      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': LanguageService.t('nav_inquiries'), 'route': isAdmin ? '/admin' : '/my-inquiries'},
+      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': LanguageService.t('nav_inquiries'), 'route': isAdmin ? '/admin-inquiries' : '/my-inquiries'},
       {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': LanguageService.t('nav_profile'), 'route': '/profile'},
     ];
 

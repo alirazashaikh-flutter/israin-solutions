@@ -394,7 +394,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 Row(
                   children: [
                     Text(
-                      _isAdmin ? 'Customer Chat' : 'AI Assistant',
+                      _isAdmin ? 'Customer Chat' : _customerInfo?['name']?.toString() ?? 'Support Team',
                       style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.onSurface),
                     ),
                     if (_isAdmin) ...[
@@ -411,7 +411,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ],
                 ),
                 Text(
-                  _isAdmin ? userName : 'Powered by Israin Intelligence',
+                  _isAdmin ? userName : 'Online • Typically replies in minutes',
                   style: GoogleFonts.inter(fontSize: 11, color: AppColors.onSurfaceVariant),
                 ),
               ],
@@ -684,14 +684,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(message['time'], style: GoogleFonts.inter(fontSize: 11, color: AppColors.outline)),
-                  if (isRight) ...[
-                    const SizedBox(width: 4),
-                    Icon(
-                      (message['read'] == true) ? Icons.done_all : Icons.done,
-                      size: 14,
-                      color: (message['read'] == true) ? const Color(0xFF00B4D8) : AppColors.outline,
-                    ),
-                  ],
                 ],
               ),
             ),

@@ -555,6 +555,63 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: _buildBottomNav(context, 2),
+    );
+  }
+
+  Widget _buildBottomNav(BuildContext context, int currentIndex) {
+    final items = [
+      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': 'Home', 'route': '/admin'},
+      {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': 'Shop', 'route': '/shop'},
+      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': 'Inquiries', 'route': '/admin-inquiries'},
+      {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': 'Profile', 'route': '/profile'},
+    ];
+
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.surfaceContainerLowest.withValues(alpha: 0.95),
+        border: Border(top: BorderSide(color: AppColors.outlineVariant.withValues(alpha: 0.3))),
+      ),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: items.asMap().entries.map((entry) {
+              final index = entry.key;
+              final item = entry.value;
+              final isActive = index == currentIndex;
+              return GestureDetector(
+                onTap: () {
+                  if (index != currentIndex) {
+                    Navigator.pushReplacementNamed(context, item['route'] as String);
+                  }
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: isActive ? 16 : 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: isActive ? AppColors.primary.withValues(alpha: 0.1) : Colors.transparent,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        isActive ? item['activeIcon'] as IconData : item['icon'] as IconData,
+                        color: isActive ? AppColors.primary : AppColors.outline,
+                        size: 22,
+                      ),
+                      if (isActive) ...[
+                        const SizedBox(width: 6),
+                        Text(item['label'] as String, style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                      ],
+                    ],
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      ),
     );
   }
 
@@ -736,7 +793,9 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
                     ),
                   ),
                 OutlinedButton.icon(
-                  onPressed: () => _showInquiryDetail(inquiry),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/chat', arguments: inquiry.id);
+                  },
                   icon: const Icon(Icons.chat_bubble_outline, size: 14),
                   label: Text('Reply',
                       style: GoogleFonts.inter(

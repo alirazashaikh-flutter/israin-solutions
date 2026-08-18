@@ -633,9 +633,9 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
   Widget _buildBottomNav(BuildContext context, int currentIndex) {
     final isAdmin = context.read<AuthProvider>().isAdmin;
     final items = [
-      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': 'Home', 'route': '/home'},
+      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': 'Home', 'route': isAdmin ? '/admin' : '/home'},
       {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': 'Shop', 'route': '/shop'},
-      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': 'Inquiries', 'route': isAdmin ? '/admin' : '/my-inquiries'},
+      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': 'Inquiries', 'route': isAdmin ? '/admin-inquiries' : '/my-inquiries'},
       {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': 'Profile', 'route': '/profile'},
     ];
 

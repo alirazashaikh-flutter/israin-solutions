@@ -261,18 +261,30 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
                               );
                               return;
                             }
-                            final success = await inquiryProvider.createInquiry(
-                              name: _nameController.text.trim(),
-                              email: _emailController.text.trim(),
-                              phone: _phoneController.text.trim(),
-                              serviceType: _serviceType,
-                              message: _messageController.text.trim(),
-                              serviceId: _serviceId,
-                              budget: _budget,
-                              priority: _priority,
-                            );
-                            if (mounted && success) {
-                              _showThankYouDialog();
+                            try {
+                              final success = await inquiryProvider.createInquiry(
+                                name: _nameController.text.trim(),
+                                email: _emailController.text.trim(),
+                                phone: _phoneController.text.trim(),
+                                serviceType: _serviceType,
+                                message: _messageController.text.trim(),
+                                serviceId: _serviceId,
+                                budget: _budget,
+                                priority: _priority,
+                              );
+                              if (mounted && success) {
+                                _showThankYouDialog();
+                              } else if (mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Failed: ${inquiryProvider.error ?? "Unknown error"}'), backgroundColor: AppColors.error),
+                                );
+                              }
+                            } catch (e) {
+                              if (mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text('Error: $e'), backgroundColor: AppColors.error),
+                                );
+                              }
                             }
                           },
                           style: ElevatedButton.styleFrom(

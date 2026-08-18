@@ -1,3 +1,4 @@
+import '../models/chatbot_log.dart';
 import 'api_service.dart';
 
 class ChatbotService {
@@ -10,5 +11,12 @@ class ChatbotService {
       'message': message,
     });
     return response;
+  }
+
+  static Future<List<ChatbotLog>> getHistory() async {
+    final response = await ApiService.get('/chatbot/history');
+    return (response as List)
+        .map((json) => ChatbotLog.fromJson(json))
+        .toList();
   }
 }

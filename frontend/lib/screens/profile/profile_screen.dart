@@ -6,6 +6,7 @@ import '../../providers/theme_provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../services/api_service.dart';
 import '../../services/language_service.dart';
+import '../chat/ai_chat_history_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -34,6 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _buildSectionTitle(LanguageService.t('account_settings')),
               _buildSettingsItem(context, Icons.person_outline, LanguageService.t('personal_details'), () => _showEditProfile(context)),
               _buildSettingsItem(context, Icons.shopping_bag_outlined, 'My Orders', () => Navigator.pushNamed(context, '/my-orders')),
+              _buildSettingsItem(context, Icons.chat_bubble_outline, 'AI Chat History', () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AiChatHistoryScreen()))),
               _buildSettingsItem(context, Icons.dashboard_outlined, LanguageService.t('customer_dashboard'), () => Navigator.pushNamed(context, '/customer-dashboard')),
               _buildSettingsItem(context, Icons.business, LanguageService.t('company_profile'), () => Navigator.pushNamed(context, '/company-profile')),
               _buildSettingsItem(context, Icons.help_outline, LanguageService.t('faq'), () => Navigator.pushNamed(context, '/faq')),
@@ -523,9 +525,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget _buildBottomNav(BuildContext context, int currentIndex) {
     final isAdmin = context.read<AuthProvider>().isAdmin;
     final items = [
-      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': LanguageService.t('nav_home'), 'route': '/home'},
+      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': LanguageService.t('nav_home'), 'route': isAdmin ? '/admin' : '/home'},
       {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': 'Shop', 'route': '/shop'},
-      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': LanguageService.t('nav_inquiries'), 'route': isAdmin ? '/admin' : '/my-inquiries'},
+      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': LanguageService.t('nav_inquiries'), 'route': isAdmin ? '/admin-inquiries' : '/my-inquiries'},
       {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': LanguageService.t('nav_profile'), 'route': '/profile'},
     ];
 

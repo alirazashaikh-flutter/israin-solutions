@@ -78,7 +78,9 @@ class InquiryProvider extends ChangeNotifier {
       );
       _inquiries.insert(0, inquiry);
       return true;
-    } catch (e) {
+    } catch (e, stack) {
+      print('INQUIRY CREATE ERROR: $e');
+      print('STACK: $stack');
       _error = e.toString();
       return false;
     } finally {
