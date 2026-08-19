@@ -6,6 +6,7 @@ import '../../config/colors.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/paypal_service.dart';
 import '../../services/shop_service.dart';
+import '../../services/language_service.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen({super.key});
@@ -44,7 +45,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       debugPrint('>>> ORDER ERROR (cash): $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to place order: $e'), backgroundColor: AppColors.error),
+          SnackBar(content: Text('${LanguageService.t('failed')}: $e'), backgroundColor: AppColors.error),
         );
       }
     }
@@ -66,7 +67,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Select Payment Method',
+                LanguageService.t('select_payment'),
                 style: GoogleFonts.inter(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -84,8 +85,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               const SizedBox(height: 20),
               _buildPaymentOption(
                 icon: Icons.account_balance_wallet,
-                title: 'Cash on Delivery',
-                subtitle: 'Pay when order is delivered',
+                title: LanguageService.t('cash_on_delivery'),
+                subtitle: LanguageService.t('cash_on_delivery_desc'),
                 onTap: () {
                   Navigator.pop(ctx);
                   _placeOrder(item);
@@ -94,8 +95,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               const SizedBox(height: 12),
               _buildPaymentOption(
                 icon: Icons.payment,
-                title: 'Pay with PayPal',
-                subtitle: 'Pay securely with your PayPal account',
+                title: LanguageService.t('pay_with_paypal'),
+                subtitle: LanguageService.t('paypal_desc'),
                 onTap: () {
                   Navigator.pop(ctx);
                   _initiatePaypal(item, total);
@@ -177,21 +178,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       final approvalUrl = payment['approvalUrl'] as String?;
       final paypalOrderId = payment['paypalOrderId'] as String?;
       if (approvalUrl == null || paypalOrderId == null) {
-        throw Exception('Could not start PayPal checkout');
+        throw Exception(LanguageService.t('could_not_start_paypal'));
       }
 
       final launched = await launchUrl(
         Uri.parse(approvalUrl),
         mode: LaunchMode.externalApplication,
       );
-      if (!launched) throw Exception('Could not open PayPal');
+      if (!launched) throw Exception(LanguageService.t('could_not_open_paypal'));
 
       if (!mounted) return;
       final completed = await _askConfirmPayment();
       if (completed != true) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Payment cancelled')),
+            SnackBar(content: Text(LanguageService.t('payment_cancelled'))),
           );
         }
         return;
@@ -218,7 +219,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       debugPrint('>>> PAYPAL ERROR: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Payment failed: $e'), backgroundColor: AppColors.error),
+          SnackBar(content: Text('${LanguageService.t('failed')}: $e'), backgroundColor: AppColors.error),
         );
       }
     }
@@ -233,7 +234,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         backgroundColor: AppColors.surfaceContainerLowest,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: Text(
-          'PayPal Payment',
+          LanguageService.t('paypal_payment'),
           style: GoogleFonts.inter(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -241,7 +242,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
         ),
         content: Text(
-          'Complete your payment on the PayPal page. When you are done, come back here and tap "I Completed Payment" to finish your order.',
+          LanguageService.t('paypal_complete_desc'),
           style: GoogleFonts.inter(
             fontSize: 14,
             color: AppColors.onSurfaceVariant,
@@ -252,7 +253,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
             child: Text(
-              'Cancel',
+              LanguageService.t('cancel'),
               style: GoogleFonts.inter(color: AppColors.error),
             ),
           ),
@@ -263,7 +264,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             ),
             child: Text(
-              'I Completed Payment',
+              LanguageService.t('i_completed_payment'),
               style: GoogleFonts.inter(color: Colors.white),
             ),
           ),
@@ -293,7 +294,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
             const SizedBox(height: 16),
             Text(
-              'Order Placed!',
+              LanguageService.t('order_placed'),
               style: GoogleFonts.inter(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
@@ -303,8 +304,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             const SizedBox(height: 8),
             Text(
               paymentMethod == 'paypal'
-                  ? 'Payment received via PayPal. Our team will review your order and get back to you shortly.'
-                  : 'Our team will review your order and get back to you shortly.',
+                  ? LanguageService.t('paypal_success_desc')
+                  : LanguageService.t('order_review_desc'),
               textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                 fontSize: 14,
@@ -331,7 +332,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
                   child: Text(
-                    'View Orders',
+                    LanguageService.t('view_orders'),
                     style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -354,7 +355,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
                 child: Text(
-                  'Continue Shopping',
+                  LanguageService.t('continue_shopping'),
                   style: GoogleFonts.inter(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
@@ -373,9 +374,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     context.watch<ThemeProvider>();
     final item = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>? ?? {};
-    final name = item['name'] ?? 'Product';
+    final name = item['name'] ?? LanguageService.t('product');
     final price = (item['price'] ?? 30).toDouble();
-    final category = item['category'] ?? 'Graphics';
+    final category = item['category'] ?? LanguageService.t('graphics');
     final deliveryTime = item['deliveryTime'] ?? '3-5 days';
     final description = item['description'] ?? 'Professional service tailored to your needs.';
     final features = List<String>.from(item['features'] ?? [
@@ -504,7 +505,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           Expanded(
             child: _buildInfoCard(
               icon: Icons.attach_money,
-              label: 'Starting Price',
+              label: LanguageService.t('starting_price'),
               value: '\$${price.toStringAsFixed(0)}',
             ),
           ),
@@ -512,7 +513,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           Expanded(
             child: _buildInfoCard(
               icon: Icons.schedule,
-              label: 'Delivery',
+              label: LanguageService.t('delivery'),
               value: deliveryTime,
             ),
           ),
@@ -520,7 +521,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           Expanded(
             child: _buildInfoCard(
               icon: Icons.category_outlined,
-              label: 'Category',
+              label: LanguageService.t('category'),
               value: category,
             ),
           ),
@@ -573,7 +574,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Description',
+            LanguageService.t('description'),
             style: GoogleFonts.inter(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -601,7 +602,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'What\'s Included',
+            LanguageService.t('whats_included'),
             style: GoogleFonts.inter(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -648,7 +649,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Quantity',
+            LanguageService.t('quantity'),
             style: GoogleFonts.inter(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -733,7 +734,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Special Requirements',
+            LanguageService.t('special_requirements'),
             style: GoogleFonts.inter(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -745,7 +746,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             controller: _requirementsController,
             maxLines: 4,
             decoration: InputDecoration(
-              hintText: 'Any specific requirements or instructions...',
+              hintText: LanguageService.t('special_requirements_hint'),
               hintStyle: GoogleFonts.inter(color: AppColors.outline, fontSize: 14),
               filled: true,
               fillColor: AppColors.surfaceContainerLowest,

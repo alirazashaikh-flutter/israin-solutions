@@ -5,6 +5,7 @@ import '../../config/colors.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/shop_service.dart';
+import '../../services/language_service.dart';
 
 class ShopScreen extends StatefulWidget {
   const ShopScreen({super.key});
@@ -14,18 +15,18 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
-  String _selectedCategory = 'All';
+  String _selectedCategory = LanguageService.t('all');
   List<Map<String, dynamic>> _items = [];
   bool _isLoading = true;
   String? _error;
 
   final List<Map<String, dynamic>> _categories = [
-    {'name': 'All', 'icon': Icons.grid_view},
-    {'name': 'Graphics', 'icon': Icons.design_services},
-    {'name': 'Web', 'icon': Icons.language},
-    {'name': 'Marketing', 'icon': Icons.campaign_outlined},
-    {'name': 'AI', 'icon': Icons.psychology},
-    {'name': 'Animation', 'icon': Icons.animation},
+    {'name': LanguageService.t('all'), 'icon': Icons.grid_view},
+    {'name': LanguageService.t('graphics'), 'icon': Icons.design_services},
+    {'name': LanguageService.t('web'), 'icon': Icons.language},
+    {'name': LanguageService.t('marketing'), 'icon': Icons.campaign_outlined},
+    {'name': LanguageService.t('ai_development'), 'icon': Icons.psychology},
+    {'name': LanguageService.t('animation'), 'icon': Icons.animation},
   ];
 
   @override
@@ -41,7 +42,7 @@ class _ShopScreenState extends State<ShopScreen> {
     });
     try {
       final items = await ShopService.getShopItems(
-        category: _selectedCategory == 'All' ? null : _selectedCategory.toLowerCase(),
+        category: _selectedCategory == LanguageService.t('all') ? null : _selectedCategory.toLowerCase(),
       );
       if (mounted) setState(() => _items = items);
     } catch (e) {
@@ -64,7 +65,7 @@ class _ShopScreenState extends State<ShopScreen> {
         appBar: AppBar(
           backgroundColor: AppColors.surface,
           title: Text(
-            'Shop',
+            LanguageService.t('shop'),
             style: GoogleFonts.inter(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -132,7 +133,7 @@ class _ShopScreenState extends State<ShopScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
-                  cat['name'] == 'All' ? Icons.grid_view : cat['icon'] as IconData,
+                  cat['name'] == LanguageService.t('all') ? Icons.grid_view : cat['icon'] as IconData,
                   size: 14,
                   color: isActive ? AppColors.primary : AppColors.onSurfaceVariant,
                 ),
@@ -197,9 +198,9 @@ class _ShopScreenState extends State<ShopScreen> {
   }
 
   Widget _buildProductCard(Map<String, dynamic> item) {
-    final name = item['name'] ?? 'Product';
+    final name = item['name'] ?? LanguageService.t('product');
     final price = item['price'] ?? 30;
-    final category = item['category'] ?? 'Graphics';
+    final category = item['category'] ?? LanguageService.t('graphics');
     final deliveryTime = item['deliveryTime'] ?? '3-5 days';
     final icon = _getCategoryIcon(category);
 
@@ -280,7 +281,7 @@ class _ShopScreenState extends State<ShopScreen> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   ),
                   child: Text(
-                    'Order Now',
+                    LanguageService.t('order_now'),
                     style: GoogleFonts.inter(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -306,11 +307,11 @@ class _ShopScreenState extends State<ShopScreen> {
             Icon(Icons.error_outline, size: 48, color: AppColors.outline),
             const SizedBox(height: 12),
             Text(
-              'Failed to load shop items',
+              LanguageService.t('failed_load_shop'),
               style: GoogleFonts.inter(color: AppColors.onSurfaceVariant),
             ),
             const SizedBox(height: 8),
-            TextButton(onPressed: _loadItems, child: const Text('Retry')),
+            TextButton(onPressed: _loadItems, child: Text(LanguageService.t('retry'))),
           ],
         ),
       ),
@@ -327,7 +328,7 @@ class _ShopScreenState extends State<ShopScreen> {
             Icon(Icons.store_outlined, size: 48, color: AppColors.outline),
             const SizedBox(height: 12),
             Text(
-              'No items in this category',
+              LanguageService.t('no_items_category'),
               style: GoogleFonts.inter(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -336,7 +337,7 @@ class _ShopScreenState extends State<ShopScreen> {
             ),
             const SizedBox(height: 4),
             Text(
-              'Check back later for new products.',
+              LanguageService.t('check_back_later'),
               style: GoogleFonts.inter(fontSize: 13, color: AppColors.outline),
             ),
           ],
@@ -365,10 +366,10 @@ class _ShopScreenState extends State<ShopScreen> {
   Widget _buildBottomNav(BuildContext context, int currentIndex) {
     final isAdmin = context.read<AuthProvider>().isAdmin;
     final items = [
-      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': 'Home', 'route': isAdmin ? '/admin' : '/home'},
-      {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': 'Shop', 'route': '/shop'},
-      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': 'Inquiries', 'route': isAdmin ? '/admin-inquiries' : '/my-inquiries'},
-      {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': 'Profile', 'route': '/profile'},
+      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': LanguageService.t('nav_home'), 'route': isAdmin ? '/admin' : '/home'},
+      {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': LanguageService.t('nav_shop'), 'route': '/shop'},
+      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': LanguageService.t('nav_inquiries'), 'route': isAdmin ? '/admin-inquiries' : '/my-inquiries'},
+      {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': LanguageService.t('nav_profile'), 'route': '/profile'},
     ];
 
     return Container(

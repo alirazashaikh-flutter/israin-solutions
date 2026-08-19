@@ -6,6 +6,7 @@ import '../../models/inquiry.dart';
 import '../../models/inquiry_note.dart';
 import '../../providers/inquiry_provider.dart';
 import '../../providers/theme_provider.dart';
+import '../../services/language_service.dart';
 
 class AdminInquiriesScreen extends StatefulWidget {
   const AdminInquiriesScreen({super.key});
@@ -44,14 +45,14 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
   String _statusLabel(String status) {
     switch (status) {
       case 'new':
-        return 'NEW';
+        return LanguageService.t('new_status');
       case 'in_discussion':
-        return 'IN DISCUSSION';
+        return LanguageService.t('in_discussion_status');
       case 'completed':
       case 'resolved':
-        return 'RESOLVED';
+        return LanguageService.t('resolved_status');
       case 'cancelled':
-        return 'CANCELLED';
+        return LanguageService.t('cancelled_status');
       default:
         return status.toUpperCase();
     }
@@ -74,8 +75,8 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(success
-              ? 'Status updated to ${_statusLabel(newStatus)}'
-              : 'Failed to update status'),
+              ? '${LanguageService.t('status_updated_to')} ${_statusLabel(newStatus)}'
+              : LanguageService.t('failed_update_status')),
           backgroundColor: success ? const Color(0xFF00A67E) : AppColors.error,
         ),
       );
@@ -88,7 +89,7 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(success ? 'Inquiry marked as resolved' : 'Failed to resolve inquiry'),
+          content: Text(success ? LanguageService.t('inquiry_resolved') : LanguageService.t('failed_resolve')),
           backgroundColor: success ? const Color(0xFF00A67E) : AppColors.error,
         ),
       );
@@ -110,7 +111,7 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Update Status',
+                LanguageService.t('update_status'),
                 style: GoogleFonts.inter(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -118,18 +119,18 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
               ),
               const SizedBox(height: 4),
               Text(
-                'Inquiry: ${inquiry.serviceType == 'ai_dev' ? 'AI Development' : 'Digital Marketing'}',
+                'Inquiry: ${inquiry.serviceType == 'ai_dev' ? LanguageService.t('ai_development') : LanguageService.t('digital_marketing')}',
                 style: GoogleFonts.inter(
                     fontSize: 13, color: AppColors.onSurfaceVariant),
               ),
               const SizedBox(height: 16),
               _buildStatusOption(
-                  ctx, inquiry, 'new', 'New', const Color(0xFFE8A317)),
+                  ctx, inquiry, 'new', LanguageService.t('new_status'), const Color(0xFFE8A317)),
               _buildStatusOption(ctx, inquiry, 'in_discussion',
-                  'In Discussion', const Color(0xFF005E6E)),
-              _buildStatusOption(ctx, inquiry, 'completed', 'Resolved',
+                  LanguageService.t('in_discussion_status'), const Color(0xFF005E6E)),
+              _buildStatusOption(ctx, inquiry, 'completed', LanguageService.t('resolved_status'),
                   const Color(0xFF00A67E)),
-              _buildStatusOption(ctx, inquiry, 'cancelled', 'Cancelled',
+              _buildStatusOption(ctx, inquiry, 'cancelled', LanguageService.t('cancelled_status'),
                   const Color(0xFFCF6679)),
               const SizedBox(height: 8),
             ],
@@ -211,8 +212,8 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
                             inquiry.name.isNotEmpty
                                 ? inquiry.name
                                 : (inquiry.serviceType == 'ai_dev'
-                                    ? 'AI Development'
-                                    : 'Digital Marketing'),
+                                    ? LanguageService.t('ai_development')
+                                    : LanguageService.t('digital_marketing')),
                             style: GoogleFonts.inter(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
@@ -287,7 +288,7 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
                         },
                         icon: const Icon(Icons.check_circle_outline,
                             size: 18, color: Color(0xFF00A67E)),
-                        label: Text('Mark Resolved',
+                        label: Text(LanguageService.t('mark_resolved'),
                             style: GoogleFonts.inter(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
@@ -308,7 +309,7 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   children: [
-                    Text('Notes',
+                    Text(LanguageService.t('notes'),
                         style: GoogleFonts.inter(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -333,7 +334,7 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
                             children: [
                               Icon(Icons.add, size: 16, color: AppColors.primary),
                               const SizedBox(width: 4),
-                              Text('Add',
+                              Text(LanguageService.t('add'),
                                   style: GoogleFonts.inter(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
@@ -362,7 +363,7 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
                               Icon(Icons.notes_outlined,
                                   size: 36, color: AppColors.outline),
                               const SizedBox(height: 8),
-                              Text('No notes yet',
+                              Text(LanguageService.t('no_notes_yet'),
                                   style: GoogleFonts.inter(
                                       fontSize: 14,
                                       color: AppColors.onSurfaceVariant)),
@@ -395,7 +396,7 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
       builder: (dialogCtx) => AlertDialog(
         backgroundColor: AppColors.surfaceContainerLowest,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text('Add Note',
+        title: Text(LanguageService.t('add_note'),
             style: GoogleFonts.inter(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -404,7 +405,7 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
           controller: noteController,
           maxLines: 4,
           decoration: InputDecoration(
-            hintText: 'Write your note...',
+            hintText: LanguageService.t('write_note'),
             filled: true,
             fillColor: AppColors.surfaceContainerLow,
             border: OutlineInputBorder(
@@ -421,7 +422,7 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogCtx),
-            child: Text('Cancel',
+            child: Text(LanguageService.t('cancel'),
                 style: GoogleFonts.inter(
                     fontSize: 14, color: AppColors.onSurfaceVariant)),
           ),
@@ -435,14 +436,14 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
               if (mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(success ? 'Note added' : 'Failed to add note'),
+                    content: Text(success ? LanguageService.t('note_added') : LanguageService.t('failed_add_note')),
                     backgroundColor:
                         success ? const Color(0xFF00A67E) : AppColors.error,
                   ),
                 );
               }
             },
-            child: Text('Add',
+            child: Text(LanguageService.t('add'),
                 style: GoogleFonts.inter(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -508,7 +509,7 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
                   children: [
                     const SizedBox(height: 8),
                     Text(
-                      'All Inquiries',
+                      LanguageService.t('all_inquiries'),
                       style: GoogleFonts.inter(
                           fontSize: 28,
                           fontWeight: FontWeight.w700,
@@ -517,7 +518,7 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Manage and respond to customer inquiries.',
+                      LanguageService.t('manage_respond'),
                       style: GoogleFonts.inter(
                           fontSize: 14, color: AppColors.onSurfaceVariant),
                     ),
@@ -535,7 +536,7 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
                               Icon(Icons.inbox_outlined,
                                   size: 48, color: AppColors.outline),
                               const SizedBox(height: 12),
-                              Text('No inquiries found',
+                              Text(LanguageService.t('no_inquiries_found'),
                                   style: GoogleFonts.inter(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
@@ -561,10 +562,10 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
 
   Widget _buildBottomNav(BuildContext context, int currentIndex) {
     final items = [
-      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': 'Home', 'route': '/admin'},
-      {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': 'Shop', 'route': '/shop'},
-      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': 'Inquiries', 'route': '/admin-inquiries'},
-      {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': 'Profile', 'route': '/profile'},
+      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': LanguageService.t('nav_home'), 'route': '/admin'},
+      {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': LanguageService.t('nav_shop'), 'route': '/shop'},
+      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': LanguageService.t('nav_inquiries'), 'route': '/admin-inquiries'},
+      {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': LanguageService.t('nav_profile'), 'route': '/profile'},
     ];
 
     return Container(
@@ -637,10 +638,10 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
 
   Widget _buildFilterChips() {
     final filters = [
-      {'value': 'all', 'label': 'All'},
-      {'value': 'new', 'label': 'New'},
-      {'value': 'in_discussion', 'label': 'In Discussion'},
-      {'value': 'resolved', 'label': 'Resolved'},
+      {'value': 'all', 'label': LanguageService.t('all')},
+      {'value': 'new', 'label': LanguageService.t('new_filter')},
+      {'value': 'in_discussion', 'label': LanguageService.t('in_discussion')},
+      {'value': 'resolved', 'label': LanguageService.t('resolved')},
     ];
 
     return Row(
@@ -699,8 +700,8 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
                         inquiry.name.isNotEmpty
                             ? inquiry.name
                             : (inquiry.serviceType == 'ai_dev'
-                                ? 'AI Development'
-                                : 'Digital Marketing'),
+                                ? LanguageService.t('ai_development')
+                                : LanguageService.t('digital_marketing')),
                         style: GoogleFonts.inter(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -777,7 +778,7 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
                     child: OutlinedButton.icon(
                       onPressed: () => _resolveInquiry(inquiry),
                       icon: const Icon(Icons.check_circle_outline, size: 14),
-                      label: Text('Mark Resolved',
+                      label: Text(LanguageService.t('mark_resolved'),
                           style: GoogleFonts.inter(
                               fontSize: 12, fontWeight: FontWeight.w500)),
                       style: OutlinedButton.styleFrom(
@@ -797,7 +798,7 @@ class _AdminInquiriesScreenState extends State<AdminInquiriesScreen> {
                     Navigator.pushNamed(context, '/chat', arguments: inquiry.id);
                   },
                   icon: const Icon(Icons.chat_bubble_outline, size: 14),
-                  label: Text('Reply',
+                  label: Text(LanguageService.t('reply'),
                       style: GoogleFonts.inter(
                           fontSize: 12, fontWeight: FontWeight.w500)),
                   style: OutlinedButton.styleFrom(

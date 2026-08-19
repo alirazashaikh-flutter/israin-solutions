@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../config/colors.dart';
 import '../../providers/auth_provider.dart';
+import '../../services/language_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -71,12 +72,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Two-Factor Authentication',
+                  LanguageService.t('two_factor'),
                   style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.onSurface),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Enter the 6-digit code sent to ${auth.pending2faEmail}',
+                  '${LanguageService.t('enter_otp_sent')} ${auth.pending2faEmail}',
                   style: GoogleFonts.inter(fontSize: 13, color: AppColors.outline),
                   textAlign: TextAlign.center,
                 ),
@@ -148,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: isLoading
                           ? SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary))
-                          : Text('Verify', style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w600, color: isComplete ? Colors.white : AppColors.outline)),
+                          : Text(LanguageService.t('verify'), style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w600, color: isComplete ? Colors.white : AppColors.outline)),
                     ),
                   ),
                 ),
@@ -160,18 +161,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     } catch (_) {}
                     if (ctx.mounted) {
                       ScaffoldMessenger.of(ctx).showSnackBar(
-                        SnackBar(content: Text('OTP resent'), backgroundColor: AppColors.success),
+                        SnackBar(content: Text(LanguageService.t('otp_resent')), backgroundColor: AppColors.success),
                       );
                     }
                   },
-                  child: Text('Resend OTP', style: GoogleFonts.inter(color: AppColors.primary, fontSize: 13)),
+                  child: Text(LanguageService.t('resend_otp'), style: GoogleFonts.inter(color: AppColors.primary, fontSize: 13)),
                 ),
                 TextButton(
                   onPressed: () {
                     auth.cancel2fa();
                     Navigator.pop(ctx);
                   },
-                  child: Text('Cancel', style: GoogleFonts.inter(color: AppColors.outline, fontSize: 13)),
+                  child: Text(LanguageService.t('cancel'), style: GoogleFonts.inter(color: AppColors.outline, fontSize: 13)),
                 ),
               ],
             ),
@@ -265,17 +266,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Welcome Back', style: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white)),
+                          Text(LanguageService.t('welcome_back'), style: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white)),
                           const SizedBox(height: 4),
-                          Text('Sign in to continue to your AI portal', style: GoogleFonts.inter(fontSize: 14, color: Colors.white.withValues(alpha: 0.6))),
+                          Text(LanguageService.t('sign_in_continue'), style: GoogleFonts.inter(fontSize: 14, color: Colors.white.withValues(alpha: 0.6))),
                           const SizedBox(height: 28),
-                          Text('EMAIL ADDRESS', style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.5), letterSpacing: 0.05)),
+                          Text(LanguageService.t('email_address'), style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.5), letterSpacing: 0.05)),
                           const SizedBox(height: 8),
                           TextField(
                             controller: _emailController,
                             style: GoogleFonts.inter(color: Colors.white),
                             decoration: InputDecoration(
-                              hintText: 'name@company.com',
+                              hintText: LanguageService.t('email_hint'),
                               hintStyle: GoogleFonts.inter(color: Colors.white.withValues(alpha: 0.3)),
                               prefixIcon: Icon(Icons.mail_outline, color: Colors.white.withValues(alpha: 0.4), size: 20),
                               filled: true,
@@ -290,10 +291,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text('PASSWORD', style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.5), letterSpacing: 0.05)),
+                              Text(LanguageService.t('password'), style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.5), letterSpacing: 0.05)),
                               TextButton(
                                 onPressed: () => Navigator.pushNamed(context, '/forgot-password'),
-                                child: Text('Forgot Password?', style: GoogleFonts.inter(fontSize: 13, color: AppColors.primaryContainer, fontWeight: FontWeight.w500)),
+                                child: Text(LanguageService.t('forgot_password'), style: GoogleFonts.inter(fontSize: 13, color: AppColors.primaryContainer, fontWeight: FontWeight.w500)),
                               ),
                             ],
                           ),
@@ -357,7 +358,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: auth.isLoading
                                     ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                                     : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                        Text('Sign In', style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600, color: _isFormValid ? Colors.white : Colors.white.withValues(alpha: 0.3))),
+                                        Text(LanguageService.t('sign_in'), style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600, color: _isFormValid ? Colors.white : Colors.white.withValues(alpha: 0.3))),
                                         const SizedBox(width: 8),
                                         Icon(Icons.arrow_forward, color: _isFormValid ? Colors.white : Colors.white.withValues(alpha: 0.3), size: 18),
                                       ]),
@@ -372,10 +373,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't have an account? ", style: GoogleFonts.inter(color: Colors.white.withValues(alpha: 0.5), fontSize: 14)),
+                        Text(LanguageService.t('dont_have_account'), style: GoogleFonts.inter(color: Colors.white.withValues(alpha: 0.5), fontSize: 14)),
                         GestureDetector(
                           onTap: () => Navigator.pushNamed(context, '/signup'),
-                          child: Text('Sign Up', style: GoogleFonts.inter(color: AppColors.primaryContainer, fontWeight: FontWeight.w600, fontSize: 14)),
+                          child: Text(LanguageService.t('sign_up'), style: GoogleFonts.inter(color: AppColors.primaryContainer, fontWeight: FontWeight.w600, fontSize: 14)),
                         ),
                       ],
                     ),

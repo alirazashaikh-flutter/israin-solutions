@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../config/colors.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/shop_service.dart';
+import '../../services/language_service.dart';
 
 class MyOrdersScreen extends StatefulWidget {
   const MyOrdersScreen({super.key});
@@ -56,15 +57,15 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
   String _statusLabel(String status) {
     switch (status) {
       case 'pending':
-        return 'PENDING';
+        return LanguageService.t('pending_status');
       case 'accepted':
-        return 'ACCEPTED';
+        return LanguageService.t('accepted');
       case 'in_progress':
-        return 'IN PROGRESS';
+        return LanguageService.t('in_progress');
       case 'delivered':
-        return 'DELIVERED';
+        return LanguageService.t('delivered');
       case 'cancelled':
-        return 'CANCELLED';
+        return LanguageService.t('cancelled');
       default:
         return status.toUpperCase();
     }
@@ -76,16 +77,16 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.surfaceContainerLowest,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text('Cancel Order', style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
-        content: Text('Are you sure you want to cancel this order?', style: GoogleFonts.inter(fontSize: 14)),
+        title: Text(LanguageService.t('cancel_order'), style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
+        content: Text(LanguageService.t('cancel_order_confirm'), style: GoogleFonts.inter(fontSize: 14)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            child: Text('No', style: GoogleFonts.inter(color: AppColors.onSurfaceVariant)),
+            child: Text(LanguageService.t('no'), style: GoogleFonts.inter(color: AppColors.onSurfaceVariant)),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: Text('Yes, Cancel', style: GoogleFonts.inter(color: AppColors.error)),
+            child: Text(LanguageService.t('yes_cancel'), style: GoogleFonts.inter(color: AppColors.error)),
           ),
         ],
       ),
@@ -97,13 +98,13 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
         _loadOrders();
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Order cancelled'), backgroundColor: AppColors.success),
+            SnackBar(content: Text(LanguageService.t('order_cancelled')), backgroundColor: AppColors.success),
           );
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to cancel order'), backgroundColor: AppColors.error),
+            SnackBar(content: Text(LanguageService.t('failed_cancel_order')), backgroundColor: AppColors.error),
           );
         }
       }
@@ -124,7 +125,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
         appBar: AppBar(
           backgroundColor: AppColors.surface,
           title: Text(
-            'My Orders',
+            LanguageService.t('my_orders'),
             style: GoogleFonts.inter(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -153,7 +154,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
   }
 
   Widget _buildOrderCard(Map<String, dynamic> order) {
-    final name = order['item_name'] ?? order['itemName'] ?? order['name'] ?? 'Product';
+    final name = order['item_name'] ?? order['itemName'] ?? order['name'] ?? LanguageService.t('product');
     final price = order['price'] ?? 0;
     final quantity = order['quantity'] ?? 1;
     final total = order['totalAmount'] ?? order['total'] ?? price * quantity;
@@ -229,7 +230,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Price',
+                      LanguageService.t('price'),
                       style: GoogleFonts.inter(fontSize: 11, color: AppColors.outline),
                     ),
                     Text(
@@ -242,7 +243,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'Qty',
+                      LanguageService.t('qty'),
                       style: GoogleFonts.inter(fontSize: 11, color: AppColors.outline),
                     ),
                     Text(
@@ -255,7 +256,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      'Total',
+                      LanguageService.t('total'),
                       style: GoogleFonts.inter(fontSize: 11, color: AppColors.outline),
                     ),
                     Text(
@@ -284,7 +285,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                 ),
                 child: Text(
-                  'Cancel Order',
+                  LanguageService.t('cancel_order'),
                   style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500),
                 ),
               ),
@@ -304,9 +305,9 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
           children: [
             Icon(Icons.error_outline, size: 48, color: AppColors.outline),
             const SizedBox(height: 12),
-            Text('Failed to load orders', style: GoogleFonts.inter(color: AppColors.onSurfaceVariant)),
+            Text(LanguageService.t('failed_load_orders'), style: GoogleFonts.inter(color: AppColors.onSurfaceVariant)),
             const SizedBox(height: 8),
-            TextButton(onPressed: _loadOrders, child: const Text('Retry')),
+            TextButton(onPressed: _loadOrders, child: Text(LanguageService.t('retry'))),
           ],
         ),
       ),
@@ -323,7 +324,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
             Icon(Icons.shopping_bag_outlined, size: 48, color: AppColors.outline),
             const SizedBox(height: 12),
             Text(
-              'No orders yet',
+              LanguageService.t('no_orders_yet'),
               style: GoogleFonts.inter(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -332,7 +333,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
             ),
             const SizedBox(height: 4),
             Text(
-              'Place your first order from the shop.',
+              LanguageService.t('first_order_desc'),
               style: GoogleFonts.inter(fontSize: 13, color: AppColors.outline),
             ),
             const SizedBox(height: 20),
@@ -349,7 +350,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 ),
                 child: Text(
-                  'Browse Shop',
+                  LanguageService.t('browse_shop'),
                   style: GoogleFonts.inter(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -366,10 +367,10 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
 
   Widget _buildBottomNav(BuildContext context, int currentIndex) {
     final items = [
-      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': 'Home', 'route': '/home'},
-      {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': 'Shop', 'route': '/shop'},
-      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': 'Inquiries', 'route': '/my-inquiries'},
-      {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': 'Profile', 'route': '/profile'},
+      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': LanguageService.t('nav_home'), 'route': '/home'},
+      {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': LanguageService.t('nav_shop'), 'route': '/shop'},
+      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': LanguageService.t('nav_inquiries'), 'route': '/my-inquiries'},
+      {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': LanguageService.t('nav_profile'), 'route': '/profile'},
     ];
 
     return Container(

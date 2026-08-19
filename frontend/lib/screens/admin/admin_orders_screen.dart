@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../config/colors.dart';
 import '../../providers/theme_provider.dart';
+import '../../services/language_service.dart';
 import '../../services/shop_service.dart';
 
 class AdminOrdersScreen extends StatefulWidget {
@@ -57,15 +58,15 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
   String _statusLabel(String status) {
     switch (status) {
       case 'pending':
-        return 'PENDING';
+        return LanguageService.t('pending_status');
       case 'accepted':
-        return 'ACCEPTED';
+        return LanguageService.t('accepted');
       case 'in_progress':
-        return 'IN PROGRESS';
+        return LanguageService.t('in_progress');
       case 'delivered':
-        return 'DELIVERED';
+        return LanguageService.t('delivered');
       case 'cancelled':
-        return 'CANCELLED';
+        return LanguageService.t('cancelled');
       default:
         return status.toUpperCase();
     }
@@ -83,7 +84,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Order status updated to ${newStatus.replaceAll('_', ' ')}'),
+            content: Text('${LanguageService.t('order_status_updated')} ${newStatus.replaceAll('_', ' ')}'),
             backgroundColor: AppColors.success,
           ),
         );
@@ -91,7 +92,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to update status'), backgroundColor: AppColors.error),
+          SnackBar(content: Text(LanguageService.t('failed_update_status')), backgroundColor: AppColors.error),
         );
       }
     }
@@ -130,7 +131,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Order Details',
+                    LanguageService.t('order_details'),
                     style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.onSurface),
                   ),
                   IconButton(
@@ -140,18 +141,18 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
                 ],
               ),
               const SizedBox(height: 16),
-              _buildDetailRow('Customer', order['customer_name'] ?? order['customerName'] ?? 'Customer'),
-              _buildDetailRow('Item', order['item_name'] ?? order['itemName'] ?? order['name'] ?? 'Product'),
-              _buildDetailRow('Category', order['category'] ?? 'N/A'),
-              _buildDetailRow('Quantity', '${order['quantity'] ?? 1}'),
-              _buildDetailRow('Price', '\$${order['price'] ?? 0}'),
-              _buildDetailRow('Total', '\$${order['totalAmount'] ?? order['total'] ?? 0}'),
+              _buildDetailRow(LanguageService.t('customer'), order['customer_name'] ?? order['customerName'] ?? LanguageService.t('customer')),
+              _buildDetailRow(LanguageService.t('item'), order['item_name'] ?? order['itemName'] ?? order['name'] ?? LanguageService.t('item')),
+              _buildDetailRow(LanguageService.t('category'), order['category'] ?? 'N/A'),
+              _buildDetailRow(LanguageService.t('quantity'), '${order['quantity'] ?? 1}'),
+              _buildDetailRow(LanguageService.t('price'), '\$${order['price'] ?? 0}'),
+              _buildDetailRow(LanguageService.t('total'), '\$${order['totalAmount'] ?? order['total'] ?? 0}'),
               if (order['requirements'] != null && (order['requirements'] as String).isNotEmpty)
-                _buildDetailRow('Requirements', order['requirements']),
-              _buildDetailRow('Date', '${order['createdAt'] ?? ''}'),
+                _buildDetailRow(LanguageService.t('requirements'), order['requirements']),
+              _buildDetailRow(LanguageService.t('date'), '${order['createdAt'] ?? ''}'),
               const SizedBox(height: 20),
               Text(
-                'Update Status',
+                LanguageService.t('update_status'),
                 style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.onSurface),
               ),
               const SizedBox(height: 12),
@@ -170,16 +171,16 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
 
     switch (currentStatus) {
       case 'pending':
-        nextStatuses.add({'status': 'accepted', 'label': 'Accept', 'icon': Icons.check, 'color': AppColors.primary});
-        nextStatuses.add({'status': 'cancelled', 'label': 'Cancel', 'icon': Icons.close, 'color': AppColors.error});
+        nextStatuses.add({'status': 'accepted', 'label': LanguageService.t('accept'), 'icon': Icons.check, 'color': AppColors.primary});
+        nextStatuses.add({'status': 'cancelled', 'label': LanguageService.t('cancel'), 'icon': Icons.close, 'color': AppColors.error});
         break;
       case 'accepted':
-        nextStatuses.add({'status': 'in_progress', 'label': 'Start', 'icon': Icons.play_arrow, 'color': AppColors.primary});
-        nextStatuses.add({'status': 'cancelled', 'label': 'Cancel', 'icon': Icons.close, 'color': AppColors.error});
+        nextStatuses.add({'status': 'in_progress', 'label': LanguageService.t('start'), 'icon': Icons.play_arrow, 'color': AppColors.primary});
+        nextStatuses.add({'status': 'cancelled', 'label': LanguageService.t('cancel'), 'icon': Icons.close, 'color': AppColors.error});
         break;
       case 'in_progress':
-        nextStatuses.add({'status': 'delivered', 'label': 'Deliver', 'icon': Icons.check_circle, 'color': AppColors.success});
-        nextStatuses.add({'status': 'cancelled', 'label': 'Cancel', 'icon': Icons.close, 'color': AppColors.error});
+        nextStatuses.add({'status': 'delivered', 'label': LanguageService.t('deliver'), 'icon': Icons.check_circle, 'color': AppColors.success});
+        nextStatuses.add({'status': 'cancelled', 'label': LanguageService.t('cancel'), 'icon': Icons.close, 'color': AppColors.error});
         break;
     }
 
@@ -251,7 +252,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
         appBar: AppBar(
           backgroundColor: AppColors.surface,
           title: Text(
-            'Orders',
+            LanguageService.t('orders'),
             style: GoogleFonts.inter(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -303,7 +304,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
           final isSelected = _selectedFilter == filter;
           return FilterChip(
             label: Text(
-              filter == 'all' ? 'All' : filter.replaceAll('_', ' ').toUpperCase(),
+              filter == 'all' ? LanguageService.t('all') : filter == 'pending' ? LanguageService.t('pending_status') : filter == 'accepted' ? LanguageService.t('accepted') : filter == 'in_progress' ? LanguageService.t('in_progress') : filter == 'delivered' ? LanguageService.t('delivered') : LanguageService.t('cancelled'),
               style: GoogleFonts.inter(
                 fontSize: 11,
                 fontWeight: FontWeight.w500,
@@ -333,7 +334,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
 
   Widget _buildOrderCard(Map<String, dynamic> order) {
     final name = order['item_name'] ?? order['itemName'] ?? order['name'] ?? 'Product';
-    final customerName = order['customer_name'] ?? order['customerName'] ?? 'Customer';
+    final customerName = order['customer_name'] ?? order['customerName'] ?? LanguageService.t('customer');
     final total = order['totalAmount'] ?? order['total'] ?? 0;
     final status = order['status'] ?? 'pending';
     final color = _statusColor(status);
@@ -429,9 +430,9 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
           children: [
             Icon(Icons.error_outline, size: 48, color: AppColors.outline),
             const SizedBox(height: 12),
-            Text('Failed to load orders', style: GoogleFonts.inter(color: AppColors.onSurfaceVariant)),
+            Text(LanguageService.t('failed_load_orders'), style: GoogleFonts.inter(color: AppColors.onSurfaceVariant)),
             const SizedBox(height: 8),
-            TextButton(onPressed: _loadOrders, child: const Text('Retry')),
+            TextButton(onPressed: _loadOrders, child: Text(LanguageService.t('retry'))),
           ],
         ),
       ),
@@ -448,7 +449,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
             Icon(Icons.shopping_bag_outlined, size: 48, color: AppColors.outline),
             const SizedBox(height: 12),
             Text(
-              'No orders found',
+              LanguageService.t('no_orders_found'),
               style: GoogleFonts.inter(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -458,7 +459,7 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
             const SizedBox(height: 4),
             Text(
               _selectedFilter == 'all'
-                  ? 'Orders will appear here once customers place them.'
+                  ? LanguageService.t('orders_appear')
                   : 'No $_selectedFilter orders.',
               style: GoogleFonts.inter(fontSize: 13, color: AppColors.outline),
               textAlign: TextAlign.center,
@@ -471,10 +472,10 @@ class _AdminOrdersScreenState extends State<AdminOrdersScreen> {
 
   Widget _buildBottomNav(BuildContext context, int currentIndex) {
     final items = [
-      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': 'Home', 'route': '/admin'},
-      {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': 'Shop', 'route': '/shop'},
-      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': 'Inquiries', 'route': '/admin-inquiries'},
-      {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': 'Profile', 'route': '/profile'},
+      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': LanguageService.t('nav_home'), 'route': '/admin'},
+      {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': LanguageService.t('nav_shop'), 'route': '/shop'},
+      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': LanguageService.t('nav_inquiries'), 'route': '/admin-inquiries'},
+      {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': LanguageService.t('nav_profile'), 'route': '/profile'},
     ];
 
     return Container(

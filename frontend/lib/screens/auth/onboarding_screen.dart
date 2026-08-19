@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../config/colors.dart';
+import '../../services/language_service.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -13,32 +14,28 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
 
-  final List<_OnboardingPage> _pages = [
-    _OnboardingPage(
-      title: 'Best on\nMobile Data',
-      description:
-          'For the best experience, use mobile data instead of WiFi. Some WiFi networks may block app connections.',
-      icon: Icons.signal_cellular_alt,
-    ),
-    _OnboardingPage(
-      title: 'Transforming\nBusiness with\nAgentic AI',
-      description:
-          'Empower your organization with autonomous agents that streamline operations, enhance decision-making, and unlock hyper-efficiency.',
-    ),
-    _OnboardingPage(
-      title: 'Intelligent\nAutomation\nat Scale',
-      description:
-          'Deploy AI-powered workflows that adapt to your business needs, reducing manual overhead and accelerating growth.',
-    ),
-    _OnboardingPage(
-      title: 'Your AI\nPartnership\nStarts Here',
-      description:
-          'Connect with our AI development and digital marketing experts to transform your vision into reality.',
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final pages = [
+      _OnboardingPage(
+        title: LanguageService.t('onboard_mobile_title'),
+        description: LanguageService.t('onboard_mobile_desc'),
+        icon: Icons.signal_cellular_alt,
+      ),
+      _OnboardingPage(
+        title: LanguageService.t('onboard_ai_title'),
+        description: LanguageService.t('onboard_ai_desc'),
+      ),
+      _OnboardingPage(
+        title: LanguageService.t('onboard_automation_title'),
+        description: LanguageService.t('onboard_automation_desc'),
+      ),
+      _OnboardingPage(
+        title: LanguageService.t('onboard_partnership_title'),
+        description: LanguageService.t('onboard_partnership_desc'),
+      ),
+    ];
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -64,7 +61,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         if (context.mounted) Navigator.pushReplacementNamed(context, '/login');
                       },
                       child: Text(
-                        'Skip',
+                        LanguageService.t('skip'),
                         style: GoogleFonts.inter(
                           color: AppColors.primaryContainer,
                           fontWeight: FontWeight.w500,
@@ -121,7 +118,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      _pages[_currentPage].title,
+                      pages[_currentPage].title,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
                         fontSize: 32,
@@ -133,7 +130,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      _pages[_currentPage].description,
+                      pages[_currentPage].description,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.inter(
                         fontSize: 15,
@@ -145,7 +142,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
-                        _pages.length,
+                        pages.length,
                         (index) => Container(
                           width: _currentPage == index ? 28 : 8,
                           height: 8,
@@ -177,7 +174,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         child: ElevatedButton(
                           onPressed: () async {
-                            if (_currentPage < _pages.length - 1) {
+                            if (_currentPage < pages.length - 1) {
                               setState(() { _currentPage++; });
                             } else {
                               final prefs = await SharedPreferences.getInstance();
@@ -196,9 +193,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                _currentPage < _pages.length - 1
-                                    ? 'Next Step'
-                                    : 'Get Started',
+                                _currentPage < pages.length - 1
+                                    ? LanguageService.t('next_step')
+                                    : LanguageService.t('get_started'),
                                 style: GoogleFonts.inter(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,

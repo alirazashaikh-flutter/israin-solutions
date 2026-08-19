@@ -5,6 +5,7 @@ import '../../config/colors.dart';
 import '../../models/service.dart';
 import '../../providers/service_provider.dart';
 import '../../providers/theme_provider.dart';
+import '../../services/language_service.dart';
 
 class ServiceCategoriesScreen extends StatefulWidget {
   const ServiceCategoriesScreen({super.key});
@@ -53,11 +54,11 @@ class _ServiceCategoriesScreenState extends State<ServiceCategoriesScreen>
                       children: [
                         _buildServiceList(
                           serviceProvider.aiServices,
-                          'AI Development',
+                          LanguageService.t('ai_development'),
                         ),
                         _buildServiceList(
                           serviceProvider.marketingServices,
-                          'Digital Marketing',
+                          LanguageService.t('digital_marketing'),
                         ),
                       ],
                     ),
@@ -76,7 +77,7 @@ class _ServiceCategoriesScreenState extends State<ServiceCategoriesScreen>
         children: [
           Image.asset('assets/logo.png', height: 36),
           Text(
-            'Browse by Category',
+            LanguageService.t('browse_category'),
             style: GoogleFonts.inter(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -108,9 +109,9 @@ class _ServiceCategoriesScreenState extends State<ServiceCategoriesScreen>
         ),
         indicatorSize: TabBarIndicatorSize.tab,
         dividerHeight: 0,
-        tabs: const [
-          Tab(text: 'AI Development'),
-          Tab(text: 'Digital Marketing'),
+        tabs: [
+          Tab(text: LanguageService.t('ai_development')),
+          Tab(text: LanguageService.t('digital_marketing')),
         ],
       ),
     );
@@ -127,7 +128,7 @@ class _ServiceCategoriesScreenState extends State<ServiceCategoriesScreen>
               Icon(Icons.category_outlined, size: 48, color: AppColors.outline),
               const SizedBox(height: 12),
               Text(
-                'No services in $category',
+                '${LanguageService.t('no_services_category')} $category',
                 style: GoogleFonts.inter(color: AppColors.outline),
               ),
             ],

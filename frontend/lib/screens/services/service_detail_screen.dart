@@ -28,9 +28,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
       (s) => s.id == serviceId,
       orElse: () => Service(
         id: '',
-        name: 'Service',
+        name: LanguageService.t('service'),
         category: 'ai_dev',
-        description: 'Service details loading...',
+        description: LanguageService.t('service_loading'),
         price: 0,
         timeline: 'TBD',
         createdAt: DateTime.now(),
@@ -102,7 +102,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                 TextButton(
                   onPressed: () => Navigator.pop(context),
                   child: Text(
-                    'Back',
+                    LanguageService.t('back'),
                     style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurfaceVariant),
                   ),
                 ),
@@ -132,7 +132,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              isAi ? 'AI DEVELOPMENT' : 'DIGITAL MARKETING',
+              isAi ? LanguageService.t('ai_development') : LanguageService.t('digital_marketing'),
               style: GoogleFonts.inter(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
@@ -173,7 +173,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
           Expanded(
             child: _buildInfoCard(
               icon: Icons.attach_money,
-              label: '${LanguageService.t('from')} Price',
+              label: LanguageService.t('price'),
               value: '\$${service.price.toStringAsFixed(0)}',
             ),
           ),
@@ -181,7 +181,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
           Expanded(
             child: _buildInfoCard(
               icon: Icons.schedule,
-              label: 'Timeline',
+              label: LanguageService.t('timeline'),
               value: service.timeline,
             ),
           ),
@@ -267,15 +267,15 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Pricing Tiers', style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.onSurface)),
+          Text(LanguageService.t('pricing_tiers'), style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.onSurface)),
           const SizedBox(height: 12),
           Row(
             children: [
-              Expanded(child: _buildTierCard('Starter', '\$${(basePrice * 0.8).toStringAsFixed(0)}', '1-2 weeks', ['Basic features', 'Email support', '1 revision'], false)),
+              Expanded(child: _buildTierCard(LanguageService.t('starter'), '\$${(basePrice * 0.8).toStringAsFixed(0)}', '1-2 weeks', [LanguageService.t('basic_features'), LanguageService.t('email_support'), '1 revision'], false)),
               const SizedBox(width: 8),
-              Expanded(child: _buildTierCard('Professional', '\$${basePrice.toStringAsFixed(0)}', service.timeline, ['Full features', 'Priority support', '3 revisions', 'Analytics'], true)),
+              Expanded(child: _buildTierCard('Professional', '\$${basePrice.toStringAsFixed(0)}', service.timeline, [LanguageService.t('full_features'), LanguageService.t('priority_support'), '3 revisions', LanguageService.t('analytics')], true)),
               const SizedBox(width: 8),
-              Expanded(child: _buildTierCard('Enterprise', '\$${(basePrice * 1.5).toStringAsFixed(0)}', 'Custom', ['Everything in Pro', 'Dedicated manager', 'Unlimited revisions', 'SLA guarantee'], false)),
+              Expanded(child: _buildTierCard(LanguageService.t('enterprise'), '\$${(basePrice * 1.5).toStringAsFixed(0)}', LanguageService.t('custom'), [LanguageService.t('everything_in_pro'), LanguageService.t('dedicated_manager'), LanguageService.t('unlimited_revisions'), LanguageService.t('sla_guarantee')], false)),
             ],
           ),
         ],
@@ -304,7 +304,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(6)),
-                child: Text('Popular', style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w600, color: Colors.white)),
+                child: Text(LanguageService.t('popular'), style: GoogleFonts.inter(fontSize: 9, fontWeight: FontWeight.w600, color: Colors.white)),
               ),
             if (isPopular) const SizedBox(height: 6),
             Text(name, style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600, color: isSelected ? AppColors.primary : AppColors.onSurface)),
@@ -336,7 +336,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'About This Service',
+            LanguageService.t('about_this_service'),
             style: GoogleFonts.inter(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -364,7 +364,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Use Cases',
+            LanguageService.t('use_cases'),
             style: GoogleFonts.inter(
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -451,7 +451,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
     final isAdmin = context.read<AuthProvider>().isAdmin;
     final items = [
       {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': LanguageService.t('nav_home'), 'route': isAdmin ? '/admin' : '/home'},
-      {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': 'Shop', 'route': '/shop'},
+      {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': LanguageService.t('nav_shop'), 'route': '/shop'},
       {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': LanguageService.t('nav_inquiries'), 'route': isAdmin ? '/admin-inquiries' : '/my-inquiries'},
       {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': LanguageService.t('nav_profile'), 'route': '/profile'},
     ];

@@ -5,6 +5,7 @@ import '../../config/colors.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/chatbot_service.dart';
 import '../../services/api_service.dart';
+import '../../services/language_service.dart';
 
 class ChatWithAIScreen extends StatefulWidget {
   const ChatWithAIScreen({super.key});
@@ -26,7 +27,7 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
     super.initState();
     _messages.add({
       'sender': 'bot',
-      'text': "Hello! I'm the Israin Intelligence Assistant. How can I help you with our AI Development and Digital Marketing services? Ask me about pricing, timelines, or anything else!",
+      'text': LanguageService.t('ai_chat_welcome'),
       'time': _formatTime(DateTime.now()),
     });
     WidgetsBinding.instance.addPostFrameCallback((_) => _initChat());
@@ -81,7 +82,7 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
       setState(() {
         _messages.add({
           'sender': 'bot',
-          'text': "I'm setting things up. Please try again in a moment.",
+          'text': LanguageService.t('setup_thanks'),
           'time': _formatTime(DateTime.now()),
         });
         _isLoading = false;
@@ -100,7 +101,7 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
         if (response['escalated'] == true && response['response'] == null) {
           _messages.add({
             'sender': 'bot',
-            'text': "Our team has been notified! They'll respond shortly.",
+            'text': LanguageService.t('team_notified'),
             'time': _formatTime(DateTime.now()),
           });
         } else {
@@ -118,7 +119,7 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
       setState(() {
         _messages.add({
           'sender': 'bot',
-          'text': 'Something went wrong. Please try again.',
+          'text': LanguageService.t('something_wrong'),
           'time': _formatTime(DateTime.now()),
         });
         _isLoading = false;
@@ -188,11 +189,11 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Chat with AI',
+                  LanguageService.t('chat_with_ai_title'),
                   style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.onSurface),
                 ),
                 Text(
-                  'Powered by Israin Intelligence',
+                  LanguageService.t('powered_by'),
                   style: GoogleFonts.inter(fontSize: 11, color: AppColors.onSurfaceVariant),
                 ),
               ],
@@ -207,7 +208,7 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
           OutlinedButton(
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Our team will be notified. They\'ll respond shortly!'), backgroundColor: AppColors.primary),
+                  SnackBar(content: Text(LanguageService.t('team_notified_short')), backgroundColor: AppColors.primary),
               );
             },
             style: OutlinedButton.styleFrom(
@@ -221,7 +222,7 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
               children: [
                 const Icon(Icons.support_agent, size: 16),
                 const SizedBox(width: 4),
-                Text('Talk to\nHuman', style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w500, height: 1.2)),
+                Text(LanguageService.t('talk_to_human'), style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w500, height: 1.2)),
               ],
             ),
           ),
@@ -250,7 +251,7 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
               child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation(AppColors.primary)),
             ),
             const SizedBox(width: 10),
-            Text('Thinking...', style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurfaceVariant, fontStyle: FontStyle.italic)),
+            Text(LanguageService.t('thinking'), style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurfaceVariant, fontStyle: FontStyle.italic)),
           ],
         ),
       ),
@@ -300,10 +301,10 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
         spacing: 8,
         runSpacing: 8,
         children: [
-          _buildQuickChip(Icons.attach_money, 'Pricing info'),
-          _buildQuickChip(Icons.schedule, 'Timelines'),
-          _buildQuickChip(Icons.code, 'Our services'),
-          _buildQuickChip(Icons.support_agent, 'Talk to team'),
+          _buildQuickChip(Icons.attach_money, LanguageService.t('pricing_info')),
+          _buildQuickChip(Icons.schedule, LanguageService.t('timelines')),
+          _buildQuickChip(Icons.code, LanguageService.t('our_services')),
+          _buildQuickChip(Icons.support_agent, LanguageService.t('talk_to_team')),
         ],
       ),
     );
@@ -345,7 +346,7 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
                   enabled: !_isLoading,
                   onSubmitted: (value) => _sendMessage(value),
                   decoration: InputDecoration(
-                    hintText: 'Type your message...',
+                    hintText: LanguageService.t('type_message'),
                     hintStyle: GoogleFonts.inter(color: AppColors.outline),
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(vertical: 12),

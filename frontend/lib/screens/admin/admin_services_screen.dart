@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../config/colors.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/admin_service.dart';
+import '../../services/language_service.dart';
 
 class AdminServicesScreen extends StatefulWidget {
   const AdminServicesScreen({super.key});
@@ -31,7 +32,7 @@ class _AdminServicesScreenState extends State<AdminServicesScreen> {
       if (mounted) setState(() => _isLoading = false);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to load services'), backgroundColor: AppColors.error),
+          SnackBar(content: Text(LanguageService.t('failed_load_services')), backgroundColor: AppColors.error),
         );
       }
     }
@@ -42,13 +43,13 @@ class _AdminServicesScreenState extends State<AdminServicesScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.surfaceContainerLowest,
-        title: Text('Delete Service', style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
-        content: Text('Are you sure you want to delete "$name"?', style: GoogleFonts.inter()),
+        title: Text(LanguageService.t('delete_service'), style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
+        content: Text('${LanguageService.t('delete_confirm')} "$name"?', style: GoogleFonts.inter()),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(LanguageService.t('cancel'))),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: Text('Delete', style: TextStyle(color: AppColors.error)),
+            child: Text(LanguageService.t('delete'), style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
@@ -60,13 +61,13 @@ class _AdminServicesScreenState extends State<AdminServicesScreen> {
         await _loadServices();
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Service deleted'), backgroundColor: const Color(0xFF00A67E)),
+            SnackBar(content: Text(LanguageService.t('service_deleted')), backgroundColor: const Color(0xFF00A67E)),
           );
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to delete'), backgroundColor: AppColors.error),
+            SnackBar(content: Text(LanguageService.t('failed_delete')), backgroundColor: AppColors.error),
           );
         }
       }
@@ -101,12 +102,12 @@ class _AdminServicesScreenState extends State<AdminServicesScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Manage Services',
+                                  LanguageService.t('manage_services_title'),
                                   style: GoogleFonts.inter(fontSize: 28, fontWeight: FontWeight.w700, color: AppColors.onSurface, letterSpacing: -0.02),
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  'Create, edit, or remove services.',
+                                  LanguageService.t('manage_services_desc'),
                                   style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurfaceVariant),
                                 ),
                               ],
@@ -136,9 +137,9 @@ class _AdminServicesScreenState extends State<AdminServicesScreen> {
                               children: [
                                 Icon(Icons.build_outlined, size: 48, color: AppColors.outline),
                                 const SizedBox(height: 12),
-                                Text('No services yet', style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.onSurfaceVariant)),
+                                Text(LanguageService.t('no_services_yet'), style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.onSurfaceVariant)),
                                 const SizedBox(height: 8),
-                                Text('Tap + to create your first service', style: GoogleFonts.inter(fontSize: 13, color: AppColors.outline)),
+                                Text(LanguageService.t('tap_plus_create'), style: GoogleFonts.inter(fontSize: 13, color: AppColors.outline)),
                               ],
                             ),
                           ),
@@ -216,7 +217,7 @@ class _AdminServicesScreenState extends State<AdminServicesScreen> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      isAi ? 'AI Development' : 'Digital Marketing',
+                      isAi ? LanguageService.t('ai_development') : LanguageService.t('digital_marketing'),
                       style: GoogleFonts.inter(fontSize: 12, color: AppColors.outline),
                     ),
                   ],
@@ -230,8 +231,8 @@ class _AdminServicesScreenState extends State<AdminServicesScreen> {
                   if (value == 'delete') _deleteService(service['_id'], service['name']);
                 },
                 itemBuilder: (ctx) => [
-                  PopupMenuItem(value: 'edit', child: Row(children: [Icon(Icons.edit_outlined, size: 18, color: AppColors.onSurface), const SizedBox(width: 8), Text('Edit', style: GoogleFonts.inter())])),
-                  PopupMenuItem(value: 'delete', child: Row(children: [Icon(Icons.delete_outline, size: 18, color: AppColors.error), const SizedBox(width: 8), Text('Delete', style: GoogleFonts.inter(color: AppColors.error))])),
+                  PopupMenuItem(value: 'edit', child: Row(children: [Icon(Icons.edit_outlined, size: 18, color: AppColors.onSurface), const SizedBox(width: 8), Text(LanguageService.t('edit'), style: GoogleFonts.inter())])),
+                  PopupMenuItem(value: 'delete', child: Row(children: [Icon(Icons.delete_outline, size: 18, color: AppColors.error), const SizedBox(width: 8), Text(LanguageService.t('delete'), style: GoogleFonts.inter(color: AppColors.error))])),
                 ],
               ),
             ],
@@ -370,7 +371,7 @@ class _ServiceFormSheetState extends State<_ServiceFormSheet> {
       if (mounted) setState(() => _isSaving = false);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to save service'), backgroundColor: AppColors.error),
+          SnackBar(content: Text(LanguageService.t('failed_save_service')), backgroundColor: AppColors.error),
         );
       }
     }
@@ -387,27 +388,27 @@ class _ServiceFormSheetState extends State<_ServiceFormSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget.existing != null ? 'Edit Service' : 'Create Service',
+              widget.existing != null ? LanguageService.t('edit_service') : LanguageService.t('create_service'),
               style: GoogleFonts.inter(fontSize: 20, fontWeight: FontWeight.w700, color: AppColors.onSurface),
             ),
             const SizedBox(height: 20),
-            _buildLabel('SERVICE NAME'),
+            _buildLabel(LanguageService.t('service_name')),
             const SizedBox(height: 8),
-            _buildTextField(_nameController, 'e.g. AI Chatbots'),
+            _buildTextField(_nameController, LanguageService.t('service_name_hint')),
             const SizedBox(height: 16),
-            _buildLabel('CATEGORY'),
+            _buildLabel(LanguageService.t('category_label')),
             const SizedBox(height: 8),
             Row(
               children: [
-                Expanded(child: _buildCategoryChip('AI Development', 'ai_dev', AppColors.primary)),
+                Expanded(child: _buildCategoryChip(LanguageService.t('ai_development'), 'ai_dev', AppColors.primary)),
                 const SizedBox(width: 12),
-                Expanded(child: _buildCategoryChip('Digital Marketing', 'digital_marketing', AppColors.secondary)),
+                Expanded(child: _buildCategoryChip(LanguageService.t('digital_marketing'), 'digital_marketing', AppColors.secondary)),
               ],
             ),
             const SizedBox(height: 16),
-            _buildLabel('DESCRIPTION'),
+            _buildLabel(LanguageService.t('description')),
             const SizedBox(height: 8),
-            _buildTextField(_descController, 'Describe the service...', maxLines: 3),
+            _buildTextField(_descController, LanguageService.t('describe_service'), maxLines: 3),
             const SizedBox(height: 16),
             Row(
               children: [
@@ -415,7 +416,7 @@ class _ServiceFormSheetState extends State<_ServiceFormSheet> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildLabel('PRICE (\$)'),
+                      _buildLabel(LanguageService.t('price_label')),
                       const SizedBox(height: 8),
                       _buildTextField(_priceController, '0', isNumber: true),
                     ],
@@ -426,18 +427,18 @@ class _ServiceFormSheetState extends State<_ServiceFormSheet> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildLabel('TIMELINE'),
+                      _buildLabel(LanguageService.t('timeline_label')),
                       const SizedBox(height: 8),
-                      _buildTextField(_timelineController, 'e.g. 2-4 weeks'),
+                      _buildTextField(_timelineController, LanguageService.t('timeline_hint')),
                     ],
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 16),
-            _buildLabel('USE CASES (comma separated)'),
+            _buildLabel(LanguageService.t('use_cases_label')),
             const SizedBox(height: 8),
-            _buildTextField(_useCasesController, 'e.g. E-commerce, Healthcare, Finance'),
+            _buildTextField(_useCasesController, LanguageService.t('use_cases_hint')),
             const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
@@ -457,7 +458,7 @@ class _ServiceFormSheetState extends State<_ServiceFormSheet> {
                   child: _isSaving
                       ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                       : Text(
-                          widget.existing != null ? 'Update Service' : 'Create Service',
+                          widget.existing != null ? LanguageService.t('update_service') : LanguageService.t('create_service'),
                           style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
                         ),
                 ),
@@ -479,7 +480,7 @@ class _ServiceFormSheetState extends State<_ServiceFormSheet> {
       maxLines: maxLines,
       keyboardType: isNumber ? TextInputType.number : TextInputType.text,
       style: GoogleFonts.inter(fontSize: 14),
-      validator: (v) => (v == null || v.trim().isEmpty) ? 'Required' : null,
+      validator: (v) => (v == null || v.trim().isEmpty) ? LanguageService.t('required') : null,
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: GoogleFonts.inter(color: AppColors.outline),

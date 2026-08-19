@@ -11,6 +11,7 @@ import '../../providers/theme_provider.dart';
 
 import '../../services/message_service.dart';
 import '../../services/api_service.dart';
+import '../../services/language_service.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -44,7 +45,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (!_isAdmin) {
       _messages.add({
         'sender': 'admin',
-        'text': "Hello! Welcome to Israin Solutions. How can we help you today?",
+        'text': LanguageService.t('chat_welcome'),
         'time': _formatTime(DateTime.now()),
       });
     }
@@ -263,7 +264,7 @@ class _ChatScreenState extends State<ChatScreen> {
       setState(() {
         _messages.add({
           'sender': 'bot',
-          'text': "Setting things up. Please try again in a moment.",
+          'text': LanguageService.t('setup_thanks'),
           'time': _formatTime(DateTime.now()),
         });
         _isLoading = false;
@@ -284,7 +285,7 @@ class _ChatScreenState extends State<ChatScreen> {
       setState(() {
         _messages.add({
           'sender': 'error',
-          'text': 'Failed to send. Please try again.',
+          'text': LanguageService.t('something_wrong'),
           'time': _formatTime(DateTime.now()),
         });
         _isLoading = false;
@@ -332,7 +333,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           Icon(Icons.chat_bubble_outline, size: 48, color: AppColors.outline),
                           const SizedBox(height: 12),
                           Text(
-                            _searchQuery.isNotEmpty ? 'No messages match your search' : 'Start the conversation',
+                            _searchQuery.isNotEmpty ? LanguageService.t('no_messages_search') : LanguageService.t('start_conversation'),
                             style: GoogleFonts.inter(fontSize: 15, color: AppColors.onSurfaceVariant),
                           ),
                         ],
@@ -394,7 +395,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 Row(
                   children: [
                     Text(
-                      _isAdmin ? 'Customer Chat' : _customerInfo?['name']?.toString() ?? 'Support Team',
+                      _isAdmin ? LanguageService.t('customer_chat') : _customerInfo?['name']?.toString() ?? LanguageService.t('support_team'),
                       style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.onSurface),
                     ),
                     if (_isAdmin) ...[
@@ -411,7 +412,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ],
                 ),
                 Text(
-                  _isAdmin ? userName : 'Online • Typically replies in minutes',
+                  _isAdmin ? userName : LanguageService.t('online_replies'),
                   style: GoogleFonts.inter(fontSize: 11, color: AppColors.onSurfaceVariant),
                 ),
               ],
@@ -429,7 +430,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 });
               },
               icon: Icon(_isSearchActive ? Icons.close : Icons.search, size: 22, color: AppColors.onSurfaceVariant),
-              tooltip: 'Search messages',
+              tooltip: LanguageService.t('search_messages'),
             ),
           if (!_isAdmin) ...[
             Container(
@@ -441,7 +442,7 @@ class _ChatScreenState extends State<ChatScreen> {
             OutlinedButton(
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Our team will be notified. They\'ll respond shortly!'), backgroundColor: AppColors.primary),
+                  SnackBar(content: Text(LanguageService.t('team_notified_short')), backgroundColor: AppColors.primary),
                 );
               },
               style: OutlinedButton.styleFrom(
@@ -455,7 +456,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: [
                   const Icon(Icons.headset_mic_outlined, size: 16),
                   const SizedBox(width: 4),
-                  Text('Talk to\nHuman', style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w500, height: 1.2)),
+                  Text(LanguageService.t('talk_to_human'), style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w500, height: 1.2)),
                 ],
               ),
             ),
@@ -512,7 +513,7 @@ class _ChatScreenState extends State<ChatScreen> {
         style: GoogleFonts.inter(fontSize: 14),
         onChanged: (value) => setState(() => _searchQuery = value),
         decoration: InputDecoration(
-          hintText: 'Search messages...',
+          hintText: LanguageService.t('search_messages_hint'),
           hintStyle: GoogleFonts.inter(color: AppColors.outline),
           prefixIcon: Icon(Icons.search, size: 20, color: AppColors.outline),
           suffixIcon: _searchQuery.isNotEmpty
@@ -573,7 +574,7 @@ class _ChatScreenState extends State<ChatScreen> {
               child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation(AppColors.primary)),
             ),
             const SizedBox(width: 10),
-            Text('Thinking...', style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurfaceVariant, fontStyle: FontStyle.italic)),
+            Text(LanguageService.t('thinking'), style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurfaceVariant, fontStyle: FontStyle.italic)),
           ],
         ),
       ),
@@ -672,7 +673,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: [
                     const Icon(Icons.support_agent, size: 14, color: Color(0xFFE8A317)),
                     const SizedBox(width: 4),
-                    Text('Escalated to human agent', style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w500, color: const Color(0xFFE8A317))),
+                    Text(LanguageService.t('escalated_human'), style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w500, color: const Color(0xFFE8A317))),
                   ],
                 ),
               ),
@@ -734,7 +735,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   onChanged: (_) => _onTyping(),
                   onSubmitted: (value) => _sendMessage(value),
                   decoration: InputDecoration(
-                    hintText: _isAdmin ? 'Reply to customer...' : 'Type your message...',
+                    hintText: _isAdmin ? LanguageService.t('reply_customer') : LanguageService.t('type_message'),
                     hintStyle: GoogleFonts.inter(color: AppColors.outline),
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(vertical: 12),
@@ -773,7 +774,7 @@ class _ChatScreenState extends State<ChatScreen> {
         if (file.size > 10 * 1024 * 1024) {
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('File size exceeds 10MB limit'), backgroundColor: AppColors.error),
+              SnackBar(content: Text(LanguageService.t('file_too_large')), backgroundColor: AppColors.error),
             );
           }
           return;
@@ -797,7 +798,7 @@ class _ChatScreenState extends State<ChatScreen> {
         } catch (e) {
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Upload failed: $e'), backgroundColor: AppColors.error),
+              SnackBar(content: Text('${LanguageService.t('upload_failed')}: $e'), backgroundColor: AppColors.error),
             );
           }
         }
@@ -808,7 +809,7 @@ class _ChatScreenState extends State<ChatScreen> {
       setState(() => _isLoading = false);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to pick file: $e'), backgroundColor: AppColors.error),
+          SnackBar(content: Text('${LanguageService.t('pick_file_failed')}: $e'), backgroundColor: AppColors.error),
         );
       }
     }

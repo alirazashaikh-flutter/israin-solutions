@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../config/colors.dart';
 import '../../services/auth_service.dart';
+import '../../services/language_service.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   final String email;
@@ -109,18 +110,18 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('New Password', style: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white)),
+                          Text(LanguageService.t('new_password'), style: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white)),
                           const SizedBox(height: 4),
-                          Text('Create a new password for your account.', style: GoogleFonts.inter(fontSize: 14, color: Colors.white.withValues(alpha: 0.6))),
+                          Text(LanguageService.t('new_password_desc'), style: GoogleFonts.inter(fontSize: 14, color: Colors.white.withValues(alpha: 0.6))),
                           const SizedBox(height: 28),
-                          Text('NEW PASSWORD', style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.5), letterSpacing: 0.05)),
+                          Text(LanguageService.t('new_password'), style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.5), letterSpacing: 0.05)),
                           const SizedBox(height: 8),
                           TextField(
                             controller: _passwordController,
                             obscureText: _obscurePassword,
                             style: GoogleFonts.inter(color: Colors.white),
                             decoration: InputDecoration(
-                              hintText: '••••••••',
+                              hintText: LanguageService.t('password_hint'),
                               hintStyle: GoogleFonts.inter(color: Colors.white.withValues(alpha: 0.3)),
                               prefixIcon: Icon(Icons.lock_outline, color: Colors.white.withValues(alpha: 0.4), size: 20),
                               suffixIcon: IconButton(
@@ -136,14 +137,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          Text('CONFIRM PASSWORD', style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.5), letterSpacing: 0.05)),
+                          Text(LanguageService.t('confirm_password'), style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.5), letterSpacing: 0.05)),
                           const SizedBox(height: 8),
                           TextField(
                             controller: _confirmController,
                             obscureText: _obscureConfirm,
                             style: GoogleFonts.inter(color: Colors.white),
                             decoration: InputDecoration(
-                              hintText: '••••••••',
+                              hintText: LanguageService.t('password_hint'),
                               hintStyle: GoogleFonts.inter(color: Colors.white.withValues(alpha: 0.3)),
                               prefixIcon: Icon(Icons.lock_outline, color: Colors.white.withValues(alpha: 0.4), size: 20),
                               suffixIcon: IconButton(
@@ -161,7 +162,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           if (_confirmController.text.isNotEmpty && _passwordController.text != _confirmController.text)
                             Padding(
                               padding: const EdgeInsets.only(top: 8),
-                              child: Text('Passwords do not match', style: GoogleFonts.inter(color: Colors.red.shade300, fontSize: 13)),
+                              child: Text(LanguageService.t('passwords_not_match'), style: GoogleFonts.inter(color: Colors.red.shade300, fontSize: 13)),
                             ),
                           const SizedBox(height: 24),
                           SizedBox(
@@ -184,7 +185,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                     );
                                     if (mounted) {
                                       ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(content: Text('Password reset successful!'), backgroundColor: Color(0xFF00A67E)),
+                                        SnackBar(content: Text(LanguageService.t('password_reset_success')), backgroundColor: Color(0xFF00A67E)),
                                       );
                                       Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
                                     }
@@ -209,7 +210,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 child: _isLoading
                                     ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                                     : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                        Text('Reset Password', style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600, color: _isFormValid ? Colors.white : Colors.white.withValues(alpha: 0.3))),
+                                        Text(LanguageService.t('reset_password'), style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600, color: _isFormValid ? Colors.white : Colors.white.withValues(alpha: 0.3))),
                                         const SizedBox(width: 8),
                                         Icon(Icons.arrow_forward, color: _isFormValid ? Colors.white : Colors.white.withValues(alpha: 0.3), size: 18),
                                       ]),
@@ -223,10 +224,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Back to ', style: GoogleFonts.inter(color: Colors.white.withValues(alpha: 0.5), fontSize: 14)),
+                        Text(LanguageService.t('back_to'), style: GoogleFonts.inter(color: Colors.white.withValues(alpha: 0.5), fontSize: 14)),
                         GestureDetector(
                           onTap: () => Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false),
-                          child: Text('Sign In', style: GoogleFonts.inter(color: AppColors.primaryContainer, fontWeight: FontWeight.w600, fontSize: 14)),
+                          child: Text(LanguageService.t('sign_in'), style: GoogleFonts.inter(color: AppColors.primaryContainer, fontWeight: FontWeight.w600, fontSize: 14)),
                         ),
                       ],
                     ),

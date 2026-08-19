@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../config/colors.dart';
 import '../../providers/theme_provider.dart';
+import '../../services/language_service.dart';
 
 class CompanyProfileScreen extends StatelessWidget {
   const CompanyProfileScreen({super.key});
@@ -42,7 +43,7 @@ class CompanyProfileScreen extends StatelessWidget {
         bottom: false,
         child: Row(
           children: [
-            Text('Company Profile', style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.onSurface)),
+            Text(LanguageService.t('company_profile'), style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.onSurface)),
           ],
         ),
       ),
@@ -69,9 +70,9 @@ class CompanyProfileScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Text('Israin Solutions', style: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w700, color: Colors.white)),
+          Text(LanguageService.t('brand_name'), style: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w700, color: Colors.white)),
           const SizedBox(height: 4),
-          Text('Developing Beyond Imagination', style: GoogleFonts.inter(fontSize: 13, color: Colors.white.withValues(alpha: 0.7))),
+          Text(LanguageService.t('tagline'), style: GoogleFonts.inter(fontSize: 13, color: Colors.white.withValues(alpha: 0.7))),
         ],
       ),
     );
@@ -82,13 +83,13 @@ class CompanyProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: Column(
         children: [
-          _buildInfoRow(Icons.location_on_outlined, 'Location', 'Lahore, Pakistan'),
+          _buildInfoRow(Icons.location_on_outlined, LanguageService.t('location'), LanguageService.t('lahore_pakistan')),
           const SizedBox(height: 12),
-          _buildInfoRow(Icons.email_outlined, 'Email', 'arappsstudio10@gmail.com'),
+          _buildInfoRow(Icons.email_outlined, LanguageService.t('email'), 'arappsstudio10@gmail.com'),
           const SizedBox(height: 12),
-          _buildInfoRow(Icons.language_outlined, 'Website', 'israin.com'),
+          _buildInfoRow(Icons.language_outlined, LanguageService.t('website'), 'israin.com'),
           const SizedBox(height: 12),
-          _buildInfoRow(Icons.calendar_today_outlined, 'Founded', '2024'),
+          _buildInfoRow(Icons.calendar_today_outlined, LanguageService.t('founded'), '2024'),
         ],
       ),
     );
@@ -124,11 +125,11 @@ class CompanyProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: Row(
         children: [
-          _buildStatCard('10+', 'Projects\nCompleted'),
+          _buildStatCard('10+', LanguageService.t('projects_completed')),
           const SizedBox(width: 10),
-          _buildStatCard('5+', 'Team\nMembers'),
+          _buildStatCard('5+', LanguageService.t('team_members')),
           const SizedBox(width: 10),
-          _buildStatCard('98%', 'Client\nSatisfaction'),
+          _buildStatCard('98%', LanguageService.t('client_satisfaction')),
         ],
       ),
     );
@@ -160,7 +161,7 @@ class CompanyProfileScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('About Us', style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.onSurface)),
+          Text(LanguageService.t('about_us'), style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.onSurface)),
           const SizedBox(height: 10),
           Text(
             'Israin Solutions is a forward-thinking digital agency specializing in AI-powered solutions and digital marketing. We help businesses transform their operations through cutting-edge technology and data-driven strategies.',
@@ -173,8 +174,8 @@ class CompanyProfileScreen extends StatelessWidget {
 
   Widget _buildServicesList() {
     final services = [
-      {'icon': Icons.psychology_outlined, 'name': 'AI Development', 'desc': 'Custom AI agents, chatbots, automation'},
-      {'icon': Icons.campaign_outlined, 'name': 'Digital Marketing', 'desc': 'SEO, SEM, social media, content'},
+      {'icon': Icons.psychology_outlined, 'name': LanguageService.t('ai_development'), 'desc': LanguageService.t('custom_ai_agents')},
+      {'icon': Icons.campaign_outlined, 'name': LanguageService.t('digital_marketing'), 'desc': LanguageService.t('seo_sem_social')},
     ];
 
     return Padding(
@@ -182,7 +183,7 @@ class CompanyProfileScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Our Services', style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.onSurface)),
+          Text(LanguageService.t('our_services_section'), style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.onSurface)),
           const SizedBox(height: 12),
           ...services.map((s) => Container(
             margin: const EdgeInsets.only(bottom: 10),

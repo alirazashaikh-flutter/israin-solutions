@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../config/colors.dart';
 import '../../services/auth_service.dart';
+import '../../services/language_service.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -101,18 +102,18 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Forgot Password?', style: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white)),
+                          Text(LanguageService.t('forgot_password_title'), style: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white)),
                           const SizedBox(height: 4),
-                          Text('Enter your email and we\'ll send you an OTP to reset your password.', style: GoogleFonts.inter(fontSize: 14, color: Colors.white.withValues(alpha: 0.6))),
+                          Text(LanguageService.t('forgot_password_desc'), style: GoogleFonts.inter(fontSize: 14, color: Colors.white.withValues(alpha: 0.6))),
                           const SizedBox(height: 28),
-                          Text('EMAIL ADDRESS', style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.5), letterSpacing: 0.05)),
+                          Text(LanguageService.t('email_address'), style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.5), letterSpacing: 0.05)),
                           const SizedBox(height: 8),
                           TextField(
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             style: GoogleFonts.inter(color: Colors.white),
                             decoration: InputDecoration(
-                              hintText: 'name@company.com',
+                              hintText: LanguageService.t('email_hint'),
                               hintStyle: GoogleFonts.inter(color: Colors.white.withValues(alpha: 0.3)),
                               prefixIcon: Icon(Icons.mail_outline, color: Colors.white.withValues(alpha: 0.4), size: 20),
                               filled: true,
@@ -141,7 +142,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                     await AuthService.forgotPassword(email: _emailController.text.trim());
                                     if (mounted) {
                                       ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(content: Text('OTP sent to your email'), backgroundColor: Color(0xFF00A67E)),
+                                        SnackBar(content: Text(LanguageService.t('otp_sent_email')), backgroundColor: Color(0xFF00A67E)),
                                       );
                                       Navigator.pushNamed(context, '/verify-otp', arguments: _emailController.text.trim());
                                     }
@@ -166,7 +167,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 child: _isLoading
                                     ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                                     : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                        Text('Send OTP', style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600, color: _isEmailValid ? Colors.white : Colors.white.withValues(alpha: 0.3))),
+                                        Text(LanguageService.t('send_otp'), style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600, color: _isEmailValid ? Colors.white : Colors.white.withValues(alpha: 0.3))),
                                         const SizedBox(width: 8),
                                         Icon(Icons.arrow_forward, color: _isEmailValid ? Colors.white : Colors.white.withValues(alpha: 0.3), size: 18),
                                       ]),
@@ -180,10 +181,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Remember your password? ', style: GoogleFonts.inter(color: Colors.white.withValues(alpha: 0.5), fontSize: 14)),
+                        Text(LanguageService.t('remember_password'), style: GoogleFonts.inter(color: Colors.white.withValues(alpha: 0.5), fontSize: 14)),
                         GestureDetector(
                           onTap: () => Navigator.pop(context),
-                          child: Text('Sign In', style: GoogleFonts.inter(color: AppColors.primaryContainer, fontWeight: FontWeight.w600, fontSize: 14)),
+                          child: Text(LanguageService.t('sign_in'), style: GoogleFonts.inter(color: AppColors.primaryContainer, fontWeight: FontWeight.w600, fontSize: 14)),
                         ),
                       ],
                     ),

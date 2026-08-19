@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../config/colors.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/auth_provider.dart';
-import '../../services/api_service.dart';
 import '../../services/language_service.dart';
 import '../chat/ai_chat_history_screen.dart';
 

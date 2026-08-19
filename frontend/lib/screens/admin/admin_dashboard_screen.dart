@@ -7,6 +7,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/admin_service.dart';
 import '../../services/inquiry_service.dart';
+import '../../services/language_service.dart';
 import '../../services/notification_service.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
@@ -69,9 +70,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                       children: [
                         Icon(Icons.error_outline, size: 48, color: AppColors.outline),
                         const SizedBox(height: 12),
-                        Text('Failed to load stats', style: GoogleFonts.inter(color: AppColors.onSurfaceVariant)),
+                        Text(LanguageService.t('failed_load_services'), style: GoogleFonts.inter(color: AppColors.onSurfaceVariant)),
                         const SizedBox(height: 8),
-                        TextButton(onPressed: _loadStats, child: const Text('Retry')),
+                        TextButton(onPressed: _loadStats, child: Text(LanguageService.t('retry'))),
                       ],
                     ),
                   ))
@@ -132,7 +133,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
   Widget _buildGreeting(String userName) {
     final hour = DateTime.now().hour;
-    final greeting = hour < 12 ? 'Good Morning' : hour < 17 ? 'Good Afternoon' : 'Good Evening';
+    final greeting = hour < 12 ? LanguageService.t('good_morning') : hour < 17 ? LanguageService.t('good_afternoon') : LanguageService.t('good_evening');
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.fromLTRB(20, 24, 20, 0),
@@ -163,7 +164,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'Live Analytics',
+                  LanguageService.t('live_analytics'),
                   style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white),
                 ),
               ],
@@ -181,7 +182,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           ),
           const SizedBox(height: 4),
           Text(
-            'Ready to scale your digital operations?',
+            LanguageService.t('ready_scale'),
             style: GoogleFonts.inter(fontSize: 14, color: Colors.white.withValues(alpha: 0.7)),
           ),
         ],
@@ -200,7 +201,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 child: OutlinedButton.icon(
                   onPressed: () => Navigator.pushNamed(context, '/admin-services'),
                   icon: const Icon(Icons.build_outlined, size: 18),
-                  label: Text('Manage Services', style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500)),
+                  label: Text(LanguageService.t('manage_services'), style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500)),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primary,
                     side: BorderSide(color: AppColors.outlineVariant),
@@ -219,7 +220,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                   child: ElevatedButton.icon(
                     onPressed: () => Navigator.pushNamed(context, '/admin-inquiries'),
                     icon: const Icon(Icons.list_alt, size: 18, color: Colors.white),
-                    label: Text('View Inquiries', style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white)),
+                    label: Text(LanguageService.t('view_inquiries'), style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500, color: Colors.white)),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       shadowColor: Colors.transparent,
@@ -237,7 +238,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             child: OutlinedButton.icon(
               onPressed: _showBroadcastDialog,
               icon: const Icon(Icons.campaign_outlined, size: 18),
-              label: Text('Broadcast Message', style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500)),
+              label: Text(LanguageService.t('broadcast_message'), style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500)),
               style: OutlinedButton.styleFrom(
                 foregroundColor: AppColors.secondary,
                 side: BorderSide(color: AppColors.secondary.withValues(alpha: 0.5)),
@@ -255,30 +256,30 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     if (_stats == null) return const SizedBox.shrink();
     final stats = [
       {
-        'title': 'Total Inquiries',
+        'title': LanguageService.t('total_inquiries'),
         'value': '${_stats!['totalInquiries'] ?? 0}',
-        'subtitle': '${_stats!['newInquiries'] ?? 0} new',
+        'subtitle': '${_stats!['newInquiries'] ?? 0} ${LanguageService.t('new')}',
         'icon': Icons.chat_bubble_outline,
         'color': AppColors.primary,
       },
       {
-        'title': 'In Discussion',
+        'title': LanguageService.t('in_discussion'),
         'value': '${_stats!['inDiscussion'] ?? 0}',
-        'subtitle': 'Active conversations',
+        'subtitle': LanguageService.t('active_conversations'),
         'icon': Icons.forum_outlined,
         'color': const Color(0xFFE8A317),
       },
       {
-        'title': 'Completed',
+        'title': LanguageService.t('resolved'),
         'value': '${_stats!['completed'] ?? 0}',
-        'subtitle': 'Projects delivered',
+        'subtitle': LanguageService.t('projects_delivered'),
         'icon': Icons.check_circle_outline,
         'color': const Color(0xFF00A67E),
       },
       {
-        'title': 'Total Customers',
+        'title': LanguageService.t('total_customers'),
         'value': '${_stats!['totalCustomers'] ?? 0}',
-        'subtitle': 'Registered users',
+        'subtitle': LanguageService.t('registered_users'),
         'icon': Icons.people_outline,
         'color': AppColors.secondary,
       },
@@ -347,9 +348,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
     if (totalCount == 0) return const SizedBox.shrink();
 
     final statuses = [
-      {'label': 'New', 'count': newCount, 'color': const Color(0xFFE8A317)},
-      {'label': 'In Discussion', 'count': discussionCount, 'color': const Color(0xFF005E6E)},
-      {'label': 'Resolved', 'count': resolvedCount, 'color': const Color(0xFF00A67E)},
+      {'label': LanguageService.t('new'), 'count': newCount, 'color': const Color(0xFFE8A317)},
+      {'label': LanguageService.t('in_discussion'), 'count': discussionCount, 'color': const Color(0xFF005E6E)},
+      {'label': LanguageService.t('resolved'), 'count': resolvedCount, 'color': const Color(0xFF00A67E)},
     ];
 
     return Container(
@@ -363,7 +364,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Inquiry Status',
+          Text(LanguageService.t('inquiry_status'),
               style: GoogleFonts.inter(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -449,14 +450,14 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             children: [
               _buildMiniStat(
                 icon: Icons.people_outline,
-                label: 'Customers',
+                label: LanguageService.t('customers'),
                 value: '${_stats!['totalCustomers'] ?? 0}',
                 color: AppColors.secondary,
               ),
               Container(width: 1, height: 32, color: AppColors.outlineVariant),
               _buildMiniStat(
                 icon: Icons.build_outlined,
-                label: 'Services',
+                label: LanguageService.t('services'),
                 value: '${_stats!['totalServices'] ?? 0}',
                 color: AppColors.primary,
               ),
@@ -518,7 +519,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'View All Reviews',
+                LanguageService.t('view_all_reviews'),
                 style: GoogleFonts.inter(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -544,7 +545,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           ),
           const SizedBox(height: 4),
           Text(
-            'Recent Reviews',
+            LanguageService.t('recent_reviews'),
             style: GoogleFonts.inter(
               fontSize: 13,
               color: AppColors.onSurfaceVariant,
@@ -581,7 +582,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'Customer',
+                          LanguageService.t('customer'),
                           style: GoogleFonts.inter(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
@@ -639,7 +640,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Breakdown', style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.onSurface)),
+          Text(LanguageService.t('breakdown'), style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.onSurface)),
           const SizedBox(height: 16),
           ...byService.map((item) => Padding(
             padding: const EdgeInsets.only(bottom: 12),
@@ -655,7 +656,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      item['_id'] == 'ai_dev' ? 'AI Development' : 'Digital Marketing',
+                      item['_id'] == 'ai_dev' ? LanguageService.t('ai_development') : LanguageService.t('digital_marketing'),
                       style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurface),
                     ),
                   ],
@@ -675,12 +676,12 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
             ),
           )),
           if (byService.isEmpty)
-            Text('No inquiries yet', style: GoogleFonts.inter(fontSize: 14, color: AppColors.outline)),
+            Text(LanguageService.t('no_inquiries_yet'), style: GoogleFonts.inter(fontSize: 14, color: AppColors.outline)),
           const Divider(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Bot Resolution Rate', style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurface)),
+              Text(LanguageService.t('bot_resolution_rate'), style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurface)),
               Text(
                 '$botRate%',
                 style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.primary),
@@ -717,31 +718,31 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Quick Actions', style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.onSurface)),
+              Text(LanguageService.t('quick_actions'), style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.onSurface)),
             ],
           ),
           const SizedBox(height: 16),
           _buildQuickAction(
             icon: Icons.list_alt,
             color: AppColors.primary,
-            title: 'Manage Inquiries',
-            subtitle: 'View and respond to all customer inquiries',
+            title: LanguageService.t('manage_inquiries'),
+            subtitle: LanguageService.t('manage_inquiries_desc'),
             onTap: () => Navigator.pushNamed(context, '/admin-inquiries'),
           ),
           const SizedBox(height: 12),
           _buildQuickAction(
             icon: Icons.build_outlined,
             color: AppColors.secondary,
-            title: 'Manage Services',
-            subtitle: 'Create, edit, or remove services',
+            title: LanguageService.t('manage_services'),
+            subtitle: LanguageService.t('manage_services_desc'),
             onTap: () => Navigator.pushNamed(context, '/admin-services'),
           ),
           const SizedBox(height: 12),
           _buildQuickAction(
             icon: Icons.shopping_bag_outlined,
             color: const Color(0xFF00A67E),
-            title: 'Manage Orders',
-            subtitle: 'View and manage all shop orders',
+            title: LanguageService.t('manage_orders'),
+            subtitle: LanguageService.t('manage_orders_desc'),
             onTap: () => Navigator.pushNamed(context, '/admin-orders'),
           ),
         ],
@@ -796,10 +797,10 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
 
   Widget _buildBottomNav(BuildContext context, int currentIndex) {
     final items = [
-      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': 'Home', 'route': '/admin'},
-      {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': 'Shop', 'route': '/shop'},
-      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': 'Inquiries', 'route': '/admin-inquiries'},
-      {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': 'Profile', 'route': '/profile'},
+      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': LanguageService.t('nav_home'), 'route': '/admin'},
+      {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': LanguageService.t('nav_shop'), 'route': '/shop'},
+      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': LanguageService.t('nav_inquiries'), 'route': '/admin-inquiries'},
+      {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': LanguageService.t('nav_profile'), 'route': '/profile'},
     ];
 
     return Container(
@@ -883,40 +884,40 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Broadcast Message', style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.onSurface)),
+                    Text(LanguageService.t('broadcast_message'), style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.onSurface)),
                     IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.close, color: AppColors.outline)),
                   ],
                 ),
                 const SizedBox(height: 8),
-                Text('Send a message to all customers', style: GoogleFonts.inter(fontSize: 13, color: AppColors.onSurfaceVariant)),
+                Text(LanguageService.t('send_message_all'), style: GoogleFonts.inter(fontSize: 13, color: AppColors.onSurfaceVariant)),
                 const SizedBox(height: 20),
                 TextFormField(
                   controller: titleController,
                   decoration: InputDecoration(
-                    labelText: 'Title',
-                    hintText: 'e.g. New Feature Update',
+                    labelText: LanguageService.t('title'),
+                    hintText: LanguageService.t('title_hint'),
                     filled: true,
                     fillColor: AppColors.surfaceContainerLow,
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
                     enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: AppColors.outlineVariant)),
                     focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: AppColors.primary)),
                   ),
-                  validator: (v) => (v == null || v.trim().isEmpty) ? 'Title is required' : null,
+                  validator: (v) => (v == null || v.trim().isEmpty) ? LanguageService.t('title_required') : null,
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: messageController,
                   maxLines: 4,
                   decoration: InputDecoration(
-                    labelText: 'Message',
-                    hintText: 'Write your message here...',
+                    labelText: LanguageService.t('message'),
+                    hintText: LanguageService.t('message_hint'),
                     filled: true,
                     fillColor: AppColors.surfaceContainerLow,
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
                     enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: AppColors.outlineVariant)),
                     focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: AppColors.primary)),
                   ),
-                  validator: (v) => (v == null || v.trim().isEmpty) ? 'Message is required' : null,
+                  validator: (v) => (v == null || v.trim().isEmpty) ? LanguageService.t('message_required') : null,
                 ),
                 const SizedBox(height: 20),
                 SizedBox(
@@ -947,7 +948,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 14),
-                        child: Text('Send to All Customers', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white)),
+                        child: Text(LanguageService.t('send_to_all'), style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.white)),
                       ),
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent, shadowColor: Colors.transparent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                     ),

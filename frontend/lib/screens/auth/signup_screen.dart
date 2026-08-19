@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../config/colors.dart';
 import '../../providers/auth_provider.dart';
+import '../../services/language_service.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -123,7 +124,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         Image.asset('assets/logo.png', height: 36),
                         const SizedBox(height: 20),
                         Text(
-                          'Create Account',
+                          LanguageService.t('create_account'),
                           style: GoogleFonts.inter(
                             fontSize: 26,
                             fontWeight: FontWeight.w600,
@@ -133,36 +134,36 @@ class _SignupScreenState extends State<SignupScreen> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Join the future of AI-driven business',
+                          LanguageService.t('join_future'),
                           style: GoogleFonts.inter(
                             fontSize: 14,
                             color: Colors.white.withValues(alpha: 0.5),
                           ),
                         ),
                         const SizedBox(height: 28),
-                        _buildFieldLabel('FULL NAME'),
+                        _buildFieldLabel(LanguageService.t('full_name')),
                         const SizedBox(height: 8),
                         _buildTextField(
                           controller: _nameController,
                           icon: Icons.person_outline,
-                          hint: 'John Doe',
+                          hint: LanguageService.t('name_hint'),
                         ),
                         const SizedBox(height: 18),
-                        _buildFieldLabel('WORK EMAIL'),
+                        _buildFieldLabel(LanguageService.t('work_email')),
                         const SizedBox(height: 8),
                         _buildTextField(
                           controller: _emailController,
                           icon: Icons.mail_outline,
-                          hint: 'name@company.com',
+                          hint: LanguageService.t('email_hint'),
                           keyboardType: TextInputType.emailAddress,
                         ),
                         const SizedBox(height: 18),
-                        _buildFieldLabel('PASSWORD'),
+                        _buildFieldLabel(LanguageService.t('password')),
                         const SizedBox(height: 8),
                         _buildTextField(
                           controller: _passwordController,
                           icon: Icons.lock_outline,
-                          hint: '••••••••',
+                          hint: LanguageService.t('password_hint'),
                           obscure: _obscurePassword,
                           suffix: IconButton(
                             icon: Icon(
@@ -210,9 +211,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                     color: Colors.white.withValues(alpha: 0.5),
                                   ),
                                   children: [
-                                    const TextSpan(text: 'I agree to the '),
+                                    TextSpan(text: LanguageService.t('i_agree_to')),
                                     TextSpan(
-                                      text: 'Terms of Service',
+                                      text: LanguageService.t('terms_of_service'),
                                       style: GoogleFonts.inter(
                                         color: AppColors.primaryContainer,
                                         fontWeight: FontWeight.w500,
@@ -220,9 +221,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () => Navigator.pushNamed(context, '/terms-of-service'),
                                     ),
-                                    const TextSpan(text: ' and '),
+                                    TextSpan(text: LanguageService.t('and')),
                                     TextSpan(
-                                      text: 'Privacy Policy',
+                                      text: LanguageService.t('privacy_policy'),
                                       style: GoogleFonts.inter(
                                         color: AppColors.primaryContainer,
                                         fontWeight: FontWeight.w500,
@@ -296,7 +297,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'Create Account',
+                                          LanguageService.t('create_account'),
                                           style: GoogleFonts.inter(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600,
@@ -322,7 +323,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Already have an account? ",
+                        LanguageService.t('already_have_account'),
                         style: GoogleFonts.inter(
                           color: Colors.white.withValues(alpha: 0.5),
                           fontSize: 14,
@@ -331,7 +332,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       GestureDetector(
                         onTap: () => Navigator.pop(context),
                         child: Text(
-                          'Log In',
+                          LanguageService.t('log_in'),
                           style: GoogleFonts.inter(
                             color: AppColors.primaryContainer,
                             fontWeight: FontWeight.w600,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../config/colors.dart';
 import '../../services/auth_service.dart';
+import '../../services/language_service.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
   final String email;
@@ -97,9 +98,9 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Verify OTP', style: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white)),
+                          Text(LanguageService.t('verify'), style: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white)),
                           const SizedBox(height: 4),
-                          Text('Enter the 6-digit code sent to ${widget.email}', style: GoogleFonts.inter(fontSize: 14, color: Colors.white.withValues(alpha: 0.6))),
+                          Text('${LanguageService.t('enter_otp_sent')} ${widget.email}', style: GoogleFonts.inter(fontSize: 14, color: Colors.white.withValues(alpha: 0.6))),
                           const SizedBox(height: 28),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,7 +177,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                                 child: _isLoading
                                     ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                                     : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                        Text('Verify', style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600, color: _isOtpComplete ? Colors.white : Colors.white.withValues(alpha: 0.3))),
+                                        Text(LanguageService.t('verify'), style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600, color: _isOtpComplete ? Colors.white : Colors.white.withValues(alpha: 0.3))),
                                         const SizedBox(width: 8),
                                         Icon(Icons.arrow_forward, color: _isOtpComplete ? Colors.white : Colors.white.withValues(alpha: 0.3), size: 18),
                                       ]),
@@ -191,14 +192,14 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                                   await AuthService.forgotPassword(email: widget.email);
                                   if (mounted) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('OTP resent'), backgroundColor: Color(0xFF00A67E)),
+                                      SnackBar(content: Text(LanguageService.t('otp_resent')), backgroundColor: Color(0xFF00A67E)),
                                     );
                                   }
                                 } catch (e) {
                                   // silent
                                 }
                               },
-                              child: Text('Resend OTP', style: GoogleFonts.inter(color: AppColors.primaryContainer, fontWeight: FontWeight.w500, fontSize: 14)),
+                              child: Text(LanguageService.t('resend_otp'), style: GoogleFonts.inter(color: AppColors.primaryContainer, fontWeight: FontWeight.w500, fontSize: 14)),
                             ),
                           ),
                         ],
@@ -208,10 +209,10 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Back to ', style: GoogleFonts.inter(color: Colors.white.withValues(alpha: 0.5), fontSize: 14)),
+                        Text(LanguageService.t('back_to'), style: GoogleFonts.inter(color: Colors.white.withValues(alpha: 0.5), fontSize: 14)),
                         GestureDetector(
                           onTap: () => Navigator.pop(context),
-                          child: Text('Sign In', style: GoogleFonts.inter(color: AppColors.primaryContainer, fontWeight: FontWeight.w600, fontSize: 14)),
+                          child: Text(LanguageService.t('sign_in'), style: GoogleFonts.inter(color: AppColors.primaryContainer, fontWeight: FontWeight.w600, fontSize: 14)),
                         ),
                       ],
                     ),

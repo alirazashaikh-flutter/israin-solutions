@@ -5,6 +5,7 @@ import '../../config/colors.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/inquiry_provider.dart';
 import '../../providers/theme_provider.dart';
+import '../../services/language_service.dart';
 
 class InquiryFormScreen extends StatefulWidget {
   const InquiryFormScreen({super.key});
@@ -78,7 +79,7 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
                 child: Row(
                 children: [
                   Text(
-                    'Submit Inquiry',
+                    LanguageService.t('submit_inquiry'),
                     style: GoogleFonts.inter(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -98,7 +99,7 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Tell us about your project',
+                      LanguageService.t('tell_about_project'),
                       style: GoogleFonts.inter(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
@@ -108,37 +109,37 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'We typically respond within 24 hours',
+                      LanguageService.t('respond_24h'),
                       style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurfaceVariant),
                     ),
                     const SizedBox(height: 28),
-                    _buildLabel('FULL NAME'),
+                    _buildLabel(LanguageService.t('full_name')),
                     const SizedBox(height: 8),
-                    _buildTextField(controller: _nameController, hint: 'John Doe', icon: Icons.person_outline, readOnly: true),
+                    _buildTextField(controller: _nameController, hint: LanguageService.t('name_hint'), icon: Icons.person_outline, readOnly: true),
                     const SizedBox(height: 20),
-                    _buildLabel('EMAIL ADDRESS'),
+                    _buildLabel(LanguageService.t('email_address')),
                     const SizedBox(height: 8),
-                    _buildTextField(controller: _emailController, hint: 'name@company.com', icon: Icons.mail_outline, readOnly: true),
+                    _buildTextField(controller: _emailController, hint: LanguageService.t('email_hint'), icon: Icons.mail_outline, readOnly: true),
                     const SizedBox(height: 20),
-                    _buildLabel('PHONE (OPTIONAL)'),
+                    _buildLabel(LanguageService.t('phone_optional')),
                     const SizedBox(height: 8),
-                    _buildTextField(controller: _phoneController, hint: '+1 (555) 000-0000', icon: Icons.phone_outlined),
+                    _buildTextField(controller: _phoneController, hint: LanguageService.t('phone_hint'), icon: Icons.phone_outlined),
                     const SizedBox(height: 20),
-                    _buildLabel('SERVICE TYPE'),
+                    _buildLabel(LanguageService.t('service_type')),
                     const SizedBox(height: 12),
                     Row(
                       children: [
                         Expanded(
-                          child: _buildServiceChip('AI Development', 'ai_dev', AppColors.primary),
+                          child: _buildServiceChip(LanguageService.t('ai_development'), 'ai_dev', AppColors.primary),
                         ),
                         const SizedBox(width: 12),
                         Expanded(
-                          child: _buildServiceChip('Digital Marketing', 'digital_marketing', AppColors.secondary),
+                          child: _buildServiceChip(LanguageService.t('digital_marketing'), 'digital_marketing', AppColors.secondary),
                         ),
                       ],
                     ),
                     const SizedBox(height: 20),
-                    _buildLabel('BUDGET'),
+                    _buildLabel(LanguageService.t('budget')),
                     const SizedBox(height: 8),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -150,21 +151,21 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton<String>(
                           value: _budget.isEmpty ? null : _budget,
-                          hint: Text('Select budget range', style: GoogleFonts.inter(color: AppColors.outline, fontSize: 14)),
+                          hint: Text(LanguageService.t('select_budget'), style: GoogleFonts.inter(color: AppColors.outline, fontSize: 14)),
                           isExpanded: true,
                           dropdownColor: AppColors.surfaceContainerLowest,
                           icon: Icon(Icons.keyboard_arrow_down, color: AppColors.outline),
                           items: [
-                            DropdownMenuItem(value: '\$100-\$500', child: Text('\$100 - \$500', style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurface))),
-                            DropdownMenuItem(value: '\$500-\$1000', child: Text('\$500 - \$1,000', style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurface))),
-                            DropdownMenuItem(value: '\$1000+', child: Text('\$1,000+', style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurface))),
+                            DropdownMenuItem(value: '\$100-\$500', child: Text(LanguageService.t('budget_100_500'), style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurface))),
+                            DropdownMenuItem(value: '\$500-\$1000', child: Text(LanguageService.t('budget_500_1000'), style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurface))),
+                            DropdownMenuItem(value: '\$1000+', child: Text(LanguageService.t('budget_1000_plus'), style: GoogleFonts.inter(fontSize: 14, color: AppColors.onSurface))),
                           ],
                           onChanged: (val) => setState(() => _budget = val ?? ''),
                         ),
                       ),
                     ),
                     const SizedBox(height: 20),
-                    _buildLabel('DELIVERY PRIORITY'),
+                    _buildLabel(LanguageService.t('delivery_priority')),
                     const SizedBox(height: 12),
                     Row(
                       children: [
@@ -182,7 +183,7 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
                                 ),
                               ),
                               child: Center(
-                                child: Text('Urgent / Fast Delivery', style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500, color: _priority == 'urgent' ? AppColors.error : AppColors.onSurfaceVariant)),
+                                child: Text(LanguageService.t('urgent_fast'), style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500, color: _priority == 'urgent' ? AppColors.error : AppColors.onSurfaceVariant)),
                               ),
                             ),
                           ),
@@ -202,7 +203,7 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
                                 ),
                               ),
                               child: Center(
-                                child: Text('Standard Time', style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500, color: _priority == 'standard' ? AppColors.primary : AppColors.onSurfaceVariant)),
+                                child: Text(LanguageService.t('standard_time'), style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500, color: _priority == 'standard' ? AppColors.primary : AppColors.onSurfaceVariant)),
                               ),
                             ),
                           ),
@@ -210,7 +211,7 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    _buildLabel('YOUR MESSAGE'),
+                    _buildLabel(LanguageService.t('your_message')),
                     const SizedBox(height: 8),
                     TextField(
                       controller: _messageController,
@@ -218,7 +219,7 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
                       style: GoogleFonts.inter(fontSize: 14),
                       textAlignVertical: TextAlignVertical.top,
                       decoration: InputDecoration(
-                        hintText: 'Tell us about your project requirements...',
+                        hintText: LanguageService.t('message_hint_form'),
                         hintStyle: GoogleFonts.inter(color: AppColors.outline),
                         prefixIcon: Padding(
                           padding: const EdgeInsets.only(left: 16, right: 8, top: 14),
@@ -260,7 +261,7 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
                             if (!_formKey.currentState!.validate()) return;
                             if (_budget.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Please select a budget range'), backgroundColor: AppColors.error),
+                                SnackBar(content: Text(LanguageService.t('select_budget_error')), backgroundColor: AppColors.error),
                               );
                               return;
                             }
@@ -298,7 +299,7 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
                           child: inquiryProvider.isLoading
                               ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                               : Text(
-                                  'Submit Inquiry',
+                                  LanguageService.t('submit_inquiry'),
                                   style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
                                 ),
                         ),
@@ -410,12 +411,12 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
               ),
               const SizedBox(height: 16),
               Text(
-                'Thank You!',
+                LanguageService.t('thank_you'),
                 style: GoogleFonts.inter(fontSize: 18, fontWeight: FontWeight.w700, color: AppColors.onSurface),
               ),
               const SizedBox(height: 8),
               Text(
-                'Thanks for submitting your request, our team will look into this and get back to you as soon as possible.',
+                LanguageService.t('thanks_submit'),
                 style: GoogleFonts.inter(fontSize: 13, color: AppColors.onSurfaceVariant),
                 textAlign: TextAlign.center,
               ),
@@ -429,7 +430,7 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
                   border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
                 ),
                 child: Text(
-                  'Want to discuss right now?',
+                  LanguageService.t('discuss_now'),
                   style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.primary),
                   textAlign: TextAlign.center,
                 ),
@@ -458,7 +459,7 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
                       children: [
                         const Icon(Icons.auto_awesome, size: 20, color: Colors.white),
                         const SizedBox(width: 8),
-                        Text('Chat with AI Bot', style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.white)),
+                        Text(LanguageService.t('chat_with_ai_bot'), style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.white)),
                       ],
                     ),
                   ),
@@ -485,7 +486,7 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
                     children: [
                       const Icon(Icons.support_agent, size: 20),
                       const SizedBox(width: 8),
-                      Text('Chat with Team', style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w600)),
+                      Text(LanguageService.t('chat_with_team'), style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w600)),
                     ],
                   ),
                 ),
@@ -496,7 +497,7 @@ class _InquiryFormScreenState extends State<InquiryFormScreen> {
                   Navigator.pop(dialogContext);
                   Navigator.pushReplacementNamed(context, '/home');
                 },
-                child: Text('Back to Home', style: GoogleFonts.inter(fontSize: 13, color: AppColors.outline)),
+                child: Text(LanguageService.t('back_to_home'), style: GoogleFonts.inter(fontSize: 13, color: AppColors.outline)),
               ),
             ],
           ),

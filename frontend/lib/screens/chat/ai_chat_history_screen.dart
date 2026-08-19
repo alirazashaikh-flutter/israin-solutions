@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../config/colors.dart';
 import '../../models/chatbot_log.dart';
 import '../../services/chatbot_service.dart';
+import '../../services/language_service.dart';
 
 class AiChatHistoryScreen extends StatefulWidget {
   const AiChatHistoryScreen({super.key});
@@ -37,7 +38,7 @@ class _AiChatHistoryScreenState extends State<AiChatHistoryScreen> {
       backgroundColor: AppColors.surface,
       appBar: AppBar(
         backgroundColor: AppColors.surfaceContainerLowest,
-        title: Text('AI Chat History', style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
+        title: Text(LanguageService.t('ai_chat_history'), style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () => Navigator.pop(context),
@@ -54,9 +55,9 @@ class _AiChatHistoryScreenState extends State<AiChatHistoryScreen> {
                         children: [
                           Icon(Icons.chat_bubble_outline, size: 64, color: AppColors.outline.withValues(alpha: 0.3)),
                           const SizedBox(height: 16),
-                          Text('No chat history yet', style: GoogleFonts.inter(fontSize: 16, color: AppColors.outline)),
+                          Text(LanguageService.t('no_chat_history'), style: GoogleFonts.inter(fontSize: 16, color: AppColors.outline)),
                           const SizedBox(height: 8),
-                          Text('Start a conversation with AI Assistant', style: GoogleFonts.inter(fontSize: 13, color: AppColors.outlineVariant)),
+                          Text(LanguageService.t('start_ai_conversation'), style: GoogleFonts.inter(fontSize: 13, color: AppColors.outlineVariant)),
                         ],
                       ),
                     )
@@ -126,7 +127,7 @@ class _AiChatHistoryScreenState extends State<AiChatHistoryScreen> {
                     color: Colors.orange.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Text('Escalated', style: GoogleFonts.inter(fontSize: 10, color: Colors.orange)),
+                  child: Text(LanguageService.t('escalated'), style: GoogleFonts.inter(fontSize: 10, color: Colors.orange)),
                 ),
               ],
             ],

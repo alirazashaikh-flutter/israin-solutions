@@ -7,6 +7,7 @@ import '../../models/rating.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/inquiry_provider.dart';
 import '../../providers/theme_provider.dart';
+import '../../services/language_service.dart';
 
 class MyInquiriesScreen extends StatefulWidget {
   const MyInquiriesScreen({super.key});
@@ -46,15 +47,15 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
   String _statusLabel(String status) {
     switch (status) {
       case 'new':
-        return 'NEW';
+        return LanguageService.t('pending_status');
       case 'in_discussion':
-        return 'IN DISCUSSION';
+        return LanguageService.t('in_discussion');
       case 'resolved':
-        return 'RESOLVED';
+        return LanguageService.t('resolved');
       case 'completed':
-        return 'COMPLETED';
+        return LanguageService.t('resolved');
       case 'cancelled':
-        return 'CANCELLED';
+        return LanguageService.t('cancelled');
       default:
         return status.toUpperCase();
     }
@@ -67,11 +68,11 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
 
   Widget _buildFilterChips() {
     final filters = [
-      {'key': 'all', 'label': 'All'},
-      {'key': 'new', 'label': 'New'},
-      {'key': 'in_discussion', 'label': 'In Discussion'},
-      {'key': 'resolved', 'label': 'Resolved'},
-      {'key': 'cancelled', 'label': 'Cancelled'},
+      {'key': 'all', 'label': LanguageService.t('all')},
+      {'key': 'new', 'label': LanguageService.t('new_filter')},
+      {'key': 'in_discussion', 'label': LanguageService.t('in_discussion')},
+      {'key': 'resolved', 'label': LanguageService.t('resolved')},
+      {'key': 'cancelled', 'label': LanguageService.t('cancelled_status')},
     ];
 
     return SizedBox(
@@ -120,21 +121,21 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          'Cancel Inquiry',
+          LanguageService.t('cancel_inquiry'),
           style: GoogleFonts.inter(fontWeight: FontWeight.w600),
         ),
         content: Text(
-          'Are you sure you want to cancel this inquiry?',
+          LanguageService.t('cancel_inquiry_confirm'),
           style: GoogleFonts.inter(fontSize: 14),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: Text('No', style: GoogleFonts.inter(color: AppColors.onSurfaceVariant)),
+            child: Text(LanguageService.t('no'), style: GoogleFonts.inter(color: AppColors.onSurfaceVariant)),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: Text('Yes, Cancel', style: GoogleFonts.inter(color: AppColors.error)),
+            child: Text(LanguageService.t('yes_cancel'), style: GoogleFonts.inter(color: AppColors.error)),
           ),
         ],
       ),
@@ -146,7 +147,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Failed to cancel inquiry',
+              LanguageService.t('failed_cancel_inquiry'),
               style: GoogleFonts.inter(),
             ),
             backgroundColor: AppColors.error,
@@ -176,7 +177,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
       builder: (context) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
           title: Text(
-            isRated ? 'Your Rating' : 'Rate Service',
+            isRated ? LanguageService.t('your_rating') : LanguageService.t('rate_service'),
             style: GoogleFonts.inter(fontWeight: FontWeight.w600),
           ),
           content: Column(
@@ -213,7 +214,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                 readOnly: isRated,
                 maxLines: 3,
                 decoration: InputDecoration(
-                  hintText: 'Optional review',
+                  hintText: LanguageService.t('optional_review'),
                   hintStyle: GoogleFonts.inter(
                     color: AppColors.outline,
                     fontSize: 14,
@@ -244,7 +245,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
             TextButton(
               onPressed: () => Navigator.pop(context),
               child: Text(
-                isRated ? 'Close' : 'Cancel',
+                isRated ? LanguageService.t('close') : LanguageService.t('cancel'),
                 style: GoogleFonts.inter(color: AppColors.onSurfaceVariant),
               ),
             ),
@@ -266,7 +267,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                'Failed to submit rating',
+                                LanguageService.t('failed_submit_rating'),
                                 style: GoogleFonts.inter(),
                               ),
                               backgroundColor: AppColors.error,
@@ -275,7 +276,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                         }
                       },
                 child: Text(
-                  'Submit',
+                  LanguageService.t('submit'),
                   style: GoogleFonts.inter(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
@@ -312,7 +313,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                   children: [
                     const SizedBox(height: 8),
                     Text(
-                      'My Inquiries',
+                      LanguageService.t('my_inquiries'),
                       style: GoogleFonts.inter(
                         fontSize: 28,
                         fontWeight: FontWeight.w700,
@@ -322,7 +323,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Track and manage your ongoing AI project collaborations.',
+                      LanguageService.t('track_manage'),
                       style: GoogleFonts.inter(
                         fontSize: 14,
                         color: AppColors.onSurfaceVariant,
@@ -341,13 +342,13 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                             Icon(Icons.error_outline, size: 48, color: AppColors.outline),
                             const SizedBox(height: 12),
                             Text(
-                              'Failed to load inquiries',
+                              LanguageService.t('failed_load_inquiries'),
                               style: GoogleFonts.inter(color: AppColors.onSurfaceVariant),
                             ),
                             const SizedBox(height: 8),
                             TextButton(
                               onPressed: () => inquiryProvider.loadInquiries(),
-                              child: Text('Retry', style: GoogleFonts.inter(color: AppColors.primary)),
+                              child: Text(LanguageService.t('retry'), style: GoogleFonts.inter(color: AppColors.primary)),
                             ),
                           ],
                         ),
@@ -360,7 +361,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                             Icon(Icons.inbox_outlined, size: 48, color: AppColors.outline),
                             const SizedBox(height: 12),
                             Text(
-                              'No inquiries yet',
+                              LanguageService.t('no_inquiries_yet_customer'),
                               style: GoogleFonts.inter(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
@@ -369,7 +370,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              'Submit your first inquiry to get started.',
+                              LanguageService.t('first_inquiry_desc'),
                               style: GoogleFonts.inter(
                                 fontSize: 13,
                                 color: AppColors.outline,
@@ -383,7 +384,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                     const SizedBox(height: 24),
                     Center(
                       child: Text(
-                        'Need to start something new?',
+                        LanguageService.t('need_something_new'),
                         style: GoogleFonts.inter(
                           fontSize: 14,
                           color: AppColors.onSurfaceVariant,
@@ -403,7 +404,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                           onPressed: () => Navigator.pushNamed(context, '/inquiry-form'),
                           icon: const Icon(Icons.add, color: Colors.white, size: 20),
                           label: Text(
-                            'Submit New Inquiry',
+                            LanguageService.t('submit_new_inquiry'),
                             style: GoogleFonts.inter(
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
@@ -481,7 +482,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      inquiry.serviceType == 'ai_dev' ? 'AI Development' : 'Digital Marketing',
+                      inquiry.serviceType == 'ai_dev' ? LanguageService.t('ai_development') : LanguageService.t('digital_marketing'),
                       style: GoogleFonts.inter(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
@@ -490,7 +491,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'Submitted on $date',
+                      '${LanguageService.t('submitted_on')} $date',
                       style: GoogleFonts.inter(
                         fontSize: 12,
                         color: AppColors.outline,
@@ -552,7 +553,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                     ),
                   ),
                   child: Text(
-                    'Cancel',
+                    LanguageService.t('cancel'),
                     style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500),
                   ),
                 )
@@ -582,7 +583,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                               ),
                             ),
                             child: Text(
-                              'View',
+                              LanguageService.t('view'),
                               style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w500),
                             ),
                           ),
@@ -592,7 +593,7 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                         onPressed: () => _showRatingDialog(inquiry),
                         icon: const Icon(Icons.star_border, size: 16),
                         label: Text(
-                          'Rate Service',
+                          LanguageService.t('rate_service'),
                           style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500),
                         ),
                         style: TextButton.styleFrom(
@@ -612,8 +613,8 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
                 icon: const Icon(Icons.arrow_forward, size: 16),
                 label: Text(
                   inquiry.status == 'completed' || inquiry.status == 'resolved'
-                      ? 'View Details'
-                      : 'Open Conversation',
+                      ? LanguageService.t('view_details')
+                      : LanguageService.t('open_conversation'),
                   style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w500),
                 ),
                 style: OutlinedButton.styleFrom(
@@ -633,10 +634,10 @@ class _MyInquiriesScreenState extends State<MyInquiriesScreen> {
   Widget _buildBottomNav(BuildContext context, int currentIndex) {
     final isAdmin = context.read<AuthProvider>().isAdmin;
     final items = [
-      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': 'Home', 'route': isAdmin ? '/admin' : '/home'},
-      {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': 'Shop', 'route': '/shop'},
-      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': 'Inquiries', 'route': isAdmin ? '/admin-inquiries' : '/my-inquiries'},
-      {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': 'Profile', 'route': '/profile'},
+      {'icon': Icons.home_outlined, 'activeIcon': Icons.home, 'label': LanguageService.t('nav_home'), 'route': isAdmin ? '/admin' : '/home'},
+      {'icon': Icons.store_outlined, 'activeIcon': Icons.store, 'label': LanguageService.t('nav_shop'), 'route': '/shop'},
+      {'icon': Icons.dashboard_outlined, 'activeIcon': Icons.dashboard, 'label': LanguageService.t('nav_inquiries'), 'route': isAdmin ? '/admin-inquiries' : '/my-inquiries'},
+      {'icon': Icons.person_outline, 'activeIcon': Icons.person, 'label': LanguageService.t('nav_profile'), 'route': '/profile'},
     ];
 
     return Container(

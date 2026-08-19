@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../config/colors.dart';
 import '../../models/service.dart';
 import '../../providers/theme_provider.dart';
+import '../../services/language_service.dart';
 import 'package:provider/provider.dart';
 
 class CompareScreen extends StatelessWidget {
@@ -24,7 +25,7 @@ class CompareScreen extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
           ),
           title: Text(
-            'Compare Services',
+            LanguageService.t('compare_services'),
             style: GoogleFonts.inter(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -33,8 +34,8 @@ class CompareScreen extends StatelessWidget {
           ),
           centerTitle: true,
         ),
-        body: const Center(
-          child: Text('Select 2 services to compare'),
+        body: Center(
+          child: Text(LanguageService.t('select_2_compare')),
         ),
       );
     }
@@ -52,7 +53,7 @@ class CompareScreen extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          'Compare Services',
+          LanguageService.t('compare_services'),
           style: GoogleFonts.inter(
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -103,7 +104,7 @@ class CompareScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Text(
-              service.category == 'ai_dev' ? 'AI' : 'Marketing',
+              service.category == 'ai_dev' ? LanguageService.t('ai_development') : LanguageService.t('marketing'),
               style: GoogleFonts.inter(
                 fontSize: 10,
                 fontWeight: FontWeight.w600,
@@ -139,11 +140,11 @@ class CompareScreen extends StatelessWidget {
 
   Widget _buildCompareTable(Service a, Service b) {
     final rows = [
-      ('Price', '\$${a.price.toStringAsFixed(0)}', '\$${b.price.toStringAsFixed(0)}'),
-      ('Timeline', a.timeline, b.timeline),
-      ('Category', a.category == 'ai_dev' ? 'AI Development' : 'Digital Marketing',
-          b.category == 'ai_dev' ? 'AI Development' : 'Digital Marketing'),
-      ('Use Cases', '${a.useCases.length} included', '${b.useCases.length} included'),
+      (LanguageService.t('price'), '\$${a.price.toStringAsFixed(0)}', '\$${b.price.toStringAsFixed(0)}'),
+      (LanguageService.t('timeline'), a.timeline, b.timeline),
+      (LanguageService.t('category'), a.category == 'ai_dev' ? LanguageService.t('ai_development') : LanguageService.t('digital_marketing'),
+          b.category == 'ai_dev' ? LanguageService.t('ai_development') : LanguageService.t('digital_marketing')),
+      (LanguageService.t('use_cases'), '${a.useCases.length} included', '${b.useCases.length} included'),
     ];
 
     return Container(
@@ -165,7 +166,7 @@ class CompareScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'Feature',
+                    LanguageService.t('feature'),
                     style: GoogleFonts.inter(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
@@ -244,7 +245,7 @@ class CompareScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Use Cases',
+                  LanguageService.t('use_cases'),
                   style: GoogleFonts.inter(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -271,7 +272,7 @@ class CompareScreen extends StatelessWidget {
   Widget _buildUseCases(List<String> useCases, Color color) {
     if (useCases.isEmpty) {
       return Text(
-        'No use cases listed',
+        LanguageService.t('no_use_cases'),
         style: GoogleFonts.inter(
           fontSize: 12,
           color: AppColors.outline,

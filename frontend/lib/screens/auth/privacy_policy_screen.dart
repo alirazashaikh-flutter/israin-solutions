@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../config/colors.dart';
 import '../../providers/theme_provider.dart';
+import '../../services/language_service.dart';
 
 class PrivacyPolicyScreen extends StatelessWidget {
   final String title;
@@ -42,12 +43,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      isPrivacy ? 'Privacy Policy' : 'Terms of Service',
+                      isPrivacy ? LanguageService.t('privacy_policy') : LanguageService.t('terms_of_service'),
                       style: GoogleFonts.inter(fontSize: 24, fontWeight: FontWeight.w700, color: AppColors.onSurface),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Last updated: July 2026',
+                      LanguageService.t('last_updated'),
                       style: GoogleFonts.inter(fontSize: 13, color: AppColors.outline),
                     ),
                     const SizedBox(height: 24),

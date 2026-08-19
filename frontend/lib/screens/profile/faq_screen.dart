@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../config/colors.dart';
+import '../../services/language_service.dart';
 
 class FaqScreen extends StatefulWidget {
   const FaqScreen({super.key});
@@ -127,22 +128,22 @@ class _FaqScreenState extends State<FaqScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             if (filteredServices.isNotEmpty) ...[
-                              _buildCategoryHeader('Services'),
+                              _buildCategoryHeader(LanguageService.t('services_category')),
                               ...filteredServices.map((faq) => _buildFaqTile(faq)),
                               const SizedBox(height: 8),
                             ],
                             if (filteredProcess.isNotEmpty) ...[
-                              _buildCategoryHeader('Process'),
+                              _buildCategoryHeader(LanguageService.t('process_category')),
                               ...filteredProcess.map((faq) => _buildFaqTile(faq)),
                               const SizedBox(height: 8),
                             ],
                             if (filteredAccount.isNotEmpty) ...[
-                              _buildCategoryHeader('Account'),
+                              _buildCategoryHeader(LanguageService.t('account_category')),
                               ...filteredAccount.map((faq) => _buildFaqTile(faq)),
                               const SizedBox(height: 8),
                             ],
                             if (filteredPayments.isNotEmpty) ...[
-                              _buildCategoryHeader('Payments'),
+                              _buildCategoryHeader(LanguageService.t('payments_category')),
                               ...filteredPayments.map((faq) => _buildFaqTile(faq)),
                               const SizedBox(height: 24),
                             ],
@@ -151,7 +152,7 @@ class _FaqScreenState extends State<FaqScreen> {
                       )
                     : Center(
                         child: Text(
-                          'No results found',
+                          LanguageService.t('no_results'),
                           style: GoogleFonts.poppins(
                             color: AppColors.onSurfaceVariant,
                             fontSize: 16,
@@ -179,7 +180,7 @@ class _FaqScreenState extends State<FaqScreen> {
           ),
           Expanded(
             child: Text(
-              'FAQ',
+              LanguageService.t('faq'),
               style: GoogleFonts.poppins(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -206,7 +207,7 @@ class _FaqScreenState extends State<FaqScreen> {
         },
         style: GoogleFonts.poppins(color: AppColors.onSurface),
         decoration: InputDecoration(
-          hintText: 'Search questions...',
+          hintText: LanguageService.t('faq_search_hint'),
           hintStyle: GoogleFonts.poppins(color: AppColors.onSurfaceVariant),
           prefixIcon: Icon(Icons.search, color: AppColors.onSurfaceVariant),
           suffixIcon: _searchQuery.isNotEmpty

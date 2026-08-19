@@ -7,6 +7,7 @@ import '../../providers/auth_provider.dart';
 import '../../providers/inquiry_provider.dart';
 import '../../providers/theme_provider.dart';
 import '../../services/inquiry_service.dart';
+import '../../services/language_service.dart';
 
 class CustomerDashboardScreen extends StatefulWidget {
   const CustomerDashboardScreen({super.key});
@@ -112,7 +113,7 @@ class _CustomerDashboardScreenState extends State<CustomerDashboardScreen> {
   Widget _buildWelcome(String userName) {
     final hour = DateTime.now().hour;
     final greeting =
-        hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+        hour < 12 ? LanguageService.t('good_morning') : hour < 17 ? LanguageService.t('good_afternoon') : LanguageService.t('good_evening');
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -134,7 +135,7 @@ class _CustomerDashboardScreenState extends State<CustomerDashboardScreen> {
           ),
           const SizedBox(height: 4),
           Text(
-            'Here\'s an overview of your account',
+            LanguageService.t('overview_account'),
             style: GoogleFonts.inter(
               fontSize: 14,
               color: Colors.white.withValues(alpha: 0.7),
@@ -152,10 +153,10 @@ class _CustomerDashboardScreenState extends State<CustomerDashboardScreen> {
     required int ratingsCount,
   }) {
     final stats = [
-      {'label': 'Total Inquiries', 'value': totalInquiries, 'icon': Icons.help_outline, 'color': AppColors.primary},
-      {'label': 'Active Chats', 'value': activeChats, 'icon': Icons.chat_bubble_outline, 'color': const Color(0xFF005E6E)},
-      {'label': 'Resolved', 'value': resolved, 'icon': Icons.check_circle_outline, 'color': AppColors.success},
-      {'label': 'Ratings Given', 'value': ratingsCount, 'icon': Icons.star_outline, 'color': const Color(0xFFF59E0B)},
+      {'label': LanguageService.t('total_inquiries'), 'value': totalInquiries, 'icon': Icons.help_outline, 'color': AppColors.primary},
+      {'label': LanguageService.t('active_chats'), 'value': activeChats, 'icon': Icons.chat_bubble_outline, 'color': const Color(0xFF005E6E)},
+      {'label': LanguageService.t('resolved'), 'value': resolved, 'icon': Icons.check_circle_outline, 'color': AppColors.success},
+      {'label': LanguageService.t('ratings_given'), 'value': ratingsCount, 'icon': Icons.star_outline, 'color': const Color(0xFFF59E0B)},
     ];
 
     return Padding(
@@ -224,7 +225,7 @@ class _CustomerDashboardScreenState extends State<CustomerDashboardScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Recent Activity',
+            LanguageService.t('recent_activity'),
             style: GoogleFonts.inter(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -242,7 +243,7 @@ class _CustomerDashboardScreenState extends State<CustomerDashboardScreen> {
               ),
               child: Center(
                 child: Text(
-                  'No recent activity',
+                  LanguageService.t('no_recent_activity'),
                   style: GoogleFonts.inter(color: AppColors.outline),
                 ),
               ),
@@ -322,13 +323,13 @@ class _CustomerDashboardScreenState extends State<CustomerDashboardScreen> {
   String _statusLabel(String status) {
     switch (status) {
       case 'new':
-        return 'New';
+        return LanguageService.t('new');
       case 'in_discussion':
-        return 'In Discussion';
+        return LanguageService.t('in_discussion');
       case 'completed':
-        return 'Resolved';
+        return LanguageService.t('resolved');
       case 'pending':
-        return 'Pending';
+        return LanguageService.t('pending');
       default:
         return status;
     }
@@ -341,7 +342,7 @@ class _CustomerDashboardScreenState extends State<CustomerDashboardScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Quick Actions',
+            LanguageService.t('quick_actions'),
             style: GoogleFonts.inter(
               fontSize: 18,
               fontWeight: FontWeight.w600,
@@ -355,7 +356,7 @@ class _CustomerDashboardScreenState extends State<CustomerDashboardScreen> {
                 child: _buildActionButton(
                   context,
                   icon: Icons.add_circle_outline,
-                  label: 'New Inquiry',
+                  label: LanguageService.t('new_inquiry'),
                   onTap: () => Navigator.pushNamed(context, '/inquiry-form'),
                 ),
               ),
@@ -364,7 +365,7 @@ class _CustomerDashboardScreenState extends State<CustomerDashboardScreen> {
                 child: _buildActionButton(
                   context,
                   icon: Icons.psychology_outlined,
-                  label: 'Chat with AI',
+                  label: LanguageService.t('chat_with_ai'),
                   onTap: () => Navigator.pushNamed(context, '/chat-ai'),
                 ),
               ),
@@ -373,7 +374,7 @@ class _CustomerDashboardScreenState extends State<CustomerDashboardScreen> {
                 child: _buildActionButton(
                   context,
                   icon: Icons.help_outline,
-                  label: 'FAQ',
+                  label: LanguageService.t('faq'),
                   onTap: () => Navigator.pushNamed(context, '/faq'),
                 ),
               ),

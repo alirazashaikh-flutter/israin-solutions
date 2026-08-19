@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../config/colors.dart';
 import '../../providers/auth_provider.dart';
+import '../../services/language_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -92,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             FadeTransition(
               opacity: _fadeText,
               child: Text(
-                'Israin Solutions',
+                LanguageService.t('brand_name'),
                 style: GoogleFonts.inter(fontSize: 22, fontWeight: FontWeight.w700, color: AppColors.onSurface, letterSpacing: -0.01),
               ),
             ),
@@ -100,7 +101,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             FadeTransition(
               opacity: _fadeTagline,
               child: Text(
-                'Developing Beyond Imagination',
+                LanguageService.t('tagline'),
                 style: GoogleFonts.inter(fontSize: 13, color: AppColors.onSurfaceVariant),
               ),
             ),
