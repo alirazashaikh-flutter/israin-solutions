@@ -28,7 +28,7 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
     super.initState();
     _messages.add({
       'sender': 'bot',
-      'text': 'Welcome to Israin Solutions! 👋\n\nI\'m here to help you with our AI and Digital Marketing services.\n\nCould you please share your **name**?',
+      'text': 'Welcome to Israin Solutions! I\'m here to help you with our AI and Digital Marketing services.\n\nCould you please share your name?',
       'time': _formatTime(DateTime.now()),
     });
     WidgetsBinding.instance.addPostFrameCallback((_) => _initChat());
