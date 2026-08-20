@@ -28,7 +28,7 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
     super.initState();
     _messages.add({
       'sender': 'bot',
-      'text': 'Welcome to Israin Solutions! I\'m here to help you with our AI and Digital Marketing services.\n\nCould you please share your name?',
+      'text': LanguageService.t('ai_chat_welcome'),
       'time': _formatTime(DateTime.now()),
     });
     WidgetsBinding.instance.addPostFrameCallback((_) => _initChat());
@@ -39,7 +39,7 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
     _initialized = true;
 
     try {
-      final response = await ApiService.get('/inquiries/chat?fresh=true');
+      final response = await ApiService.get('/inquiries/chat');
       _inquiryId = response['_id'];
     } catch (e) {
       debugPrint('Failed to init AI chat: $e');
