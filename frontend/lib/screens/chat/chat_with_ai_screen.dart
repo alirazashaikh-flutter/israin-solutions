@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../config/colors.dart';
@@ -27,7 +28,7 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
     super.initState();
     _messages.add({
       'sender': 'bot',
-      'text': LanguageService.t('ai_chat_welcome'),
+      'text': 'Welcome to Israin Solutions! 👋\n\nI\'m here to help you with our AI and Digital Marketing services.\n\nCould you please share your **name**?',
       'time': _formatTime(DateTime.now()),
     });
     WidgetsBinding.instance.addPostFrameCallback((_) => _initChat());
@@ -38,7 +39,7 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
     _initialized = true;
 
     try {
-      final response = await ApiService.get('/inquiries/chat');
+      final response = await ApiService.get('/inquiries/chat?fresh=true');
       _inquiryId = response['_id'];
     } catch (e) {
       debugPrint('Failed to init AI chat: $e');
@@ -182,49 +183,22 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
       ),
       child: Row(
         children: [
-          Image.asset('assets/logo.png', height: 36),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  LanguageService.t('chat_with_ai_title'),
-                  style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.onSurface),
-                ),
-                Text(
-                  LanguageService.t('powered_by'),
-                  style: GoogleFonts.inter(fontSize: 11, color: AppColors.onSurfaceVariant),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: 8,
-            height: 8,
-            decoration: const BoxDecoration(color: Color(0xFF00FF88), shape: BoxShape.circle),
-          ),
-          const SizedBox(width: 8),
-          OutlinedButton(
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(LanguageService.t('team_notified_short')), backgroundColor: AppColors.primary),
-              );
-            },
-            style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.onSurfaceVariant,
-              side: BorderSide(color: AppColors.outlineVariant),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.support_agent, size: 16),
-                const SizedBox(width: 4),
-                Text(LanguageService.t('talk_to_human'), style: GoogleFonts.inter(fontSize: 11, fontWeight: FontWeight.w500, height: 1.2)),
-              ],
-            ),
+          Image.asset('assets/logo.png', height: 40),
+          const SizedBox(width: 14),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                LanguageService.t('chat_with_ai_title'),
+                style: GoogleFonts.inter(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.onSurface),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                LanguageService.t('powered_by'),
+                style: GoogleFonts.inter(fontSize: 11, color: AppColors.onSurfaceVariant),
+              ),
+            ],
           ),
         ],
       ),
@@ -283,6 +257,23 @@ class _ChatWithAIScreenState extends State<ChatWithAIScreen> {
                 style: GoogleFonts.inter(fontSize: 14, color: isRight ? Colors.white : AppColors.onSurface, height: 1.5),
               ),
             ),
+            if (isBot)
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: GestureDetector(
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: message['text']));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Copied!', style: GoogleFonts.inter(fontSize: 12)),
+                        duration: const Duration(seconds: 1),
+                        backgroundColor: AppColors.primary,
+                      ),
+                    );
+                  },
+                  child: Icon(Icons.copy_rounded, size: 14, color: AppColors.outline),
+                ),
+              ),
             const SizedBox(height: 4),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4),
